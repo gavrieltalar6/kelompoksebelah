@@ -1,6 +1,6 @@
-using CakeProject.Models; // Baris ini memberi tahu VS Code untuk melihat folder Models
+using CakeProject.Models;
 
-namespace CakeProject.Models.Users; // Tambahkan .Users
+namespace CakeProject.Models.Users;
 
 public abstract class User : BaseEntity 
 {
