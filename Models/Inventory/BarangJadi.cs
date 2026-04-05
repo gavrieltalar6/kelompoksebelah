@@ -2,17 +2,11 @@ using System;
 
 namespace CakeProject.Models.Inventory
 {
-    public class BarangJadi : Barang
+    public class BarangJadi : BarangDijual
     {
-        public double HargaJual { get; set; }
         public string Vendor { get; set; }
         public string Dimensi { get; set; }
         public string Warna { get; set; }
-
-        public double HitungProfit()
-        {
-            return HargaJual - HargaBeli;
-        }
 
         public void TampilkanSpesifikasi()
         {
