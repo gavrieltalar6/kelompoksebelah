@@ -17,12 +17,14 @@ namespace CakeProject.Models.Finance
             return TotalPemasukan - TotalPengeluaran;
         }
 
-        public void TampilkanLaporan()
+        public string TampilkanLaporan()
         {
-            Console.WriteLine("=== LAPORAN ===");
-            Console.WriteLine($"Pemasukan: {TotalPemasukan}");
-            Console.WriteLine($"Pengeluaran: {TotalPengeluaran}");
-            Console.WriteLine($"Laba: {HitungLaba()}");
+           string laporan = "=== LAPORAN ===\n";
+        laporan += $"Pemasukan: {TotalPemasukan}\n";
+        laporan += $"Pengeluaran: {TotalPengeluaran}\n";
+        laporan += $"Laba: {HitungLaba()}";
+
+        return laporan;
         }
     }
 }

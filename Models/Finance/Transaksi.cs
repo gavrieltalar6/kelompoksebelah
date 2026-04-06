@@ -14,11 +14,14 @@ namespace CakeProject.Models.Finance
             return TotalBayar + Pajak;
         }
 
-        public void CetakStruk()
+       public string CetakStruk()
         {
-            Console.WriteLine($"ID: {IDTransaksi}");
-            Console.WriteLine($"Tanggal: {Tanggal}");
-            Console.WriteLine($"Total: {HitungTotal()}");
+            string struk = "";
+            struk += $"ID: {IDTransaksi}\n";
+            struk += $"Tanggal: {Tanggal}\n";
+            struk += $"Total: {HitungTotal()}\n";
+            
+            return struk;
         }
     }
 }

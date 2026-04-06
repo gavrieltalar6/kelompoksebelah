@@ -16,10 +16,15 @@ namespace CakeProject.Models.Inventory
 
         public void KurangiStok(double jumlah)
         {
-            if (JumlahStok >= jumlah)
+             if (JumlahStok >= jumlah)
+            {
                 JumlahStok -= jumlah;
+                return true;
+            }
             else
-                Console.WriteLine("Stok tidak cukup!");
+            {
+                return false;
+            }
         }
 
         public bool CekStokRendah()

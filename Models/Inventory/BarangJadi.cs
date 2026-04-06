@@ -8,11 +8,11 @@ namespace CakeProject.Models.Inventory
         public string Dimensi { get; set; }
         public string Warna { get; set; }
 
-        public void TampilkanSpesifikasi()
+        public string TampilkanSpesifikasi()
         {
-            Console.WriteLine($"Vendor: {Vendor}");
-            Console.WriteLine($"Dimensi: {Dimensi}");
-            Console.WriteLine($"Warna: {Warna}");
+            return $"Vendor: {Vendor}\n" +
+            $"Dimensi: {Dimensi}\n" +
+            $"Warna: {Warna}";
         }
     }
 }
