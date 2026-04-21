@@ -14,17 +14,14 @@ namespace CakeProject.Models.Inventory
             JumlahStok += jumlah;
         }
 
-        public void KurangiStok(double jumlah)
+        public bool KurangiStok(double jumlah)
         {
-             if (JumlahStok >= jumlah)
+            if (JumlahStok >= jumlah)
             {
                 JumlahStok -= jumlah;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool CekStokRendah()

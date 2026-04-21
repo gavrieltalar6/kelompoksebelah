@@ -1,6 +1,11 @@
 namespace CakeProject.Models.Production;
 
-internal class ResepKue;
+internal class ResepKue
+{
+    private Dictionary<string, double> DaftarBahanBaku { get; set; }
+    private double LamaMasak { get; set; }
+    
+
     private Dictionary<string, double> DaftarBahanBaku { get; set; }// Key: Nama Bahan, Value: Jumlah (Bisa gram, ml, atau butir)
     private double LamaMasak { get; set; } // satuannya menit
 
@@ -34,3 +39,4 @@ internal class ResepKue;
         // Return 5% dari total berat sebagai waste
         return totalBeratGram * 0.05;
     }
+}

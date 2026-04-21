@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CakeProject.Models.Finance
 {
-    public class Laporan
+    public class Laporan : BaseEntity
     {
         public int IDLaporan { get; set; }
         public DateTime TanggalMulai { get; set; }
