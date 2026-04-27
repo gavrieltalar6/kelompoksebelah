@@ -7,7 +7,7 @@ public class SatuanColorConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value?.ToString() == parameter?.ToString()
-            ? Color.FromArgb("#BFBFBF")  // dipilih
+            ? Color.FromArgb("#46f311")  // dipilih
             : Colors.Transparent;         // tidak dipilih
     }
 

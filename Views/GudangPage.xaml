@@ -2,160 +2,170 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CakeProject.ViewModels"
+             xmlns:cvt="clr-namespace:CakeProject.Converters"
              x:Class="CakeProject.Views.GudangPage"
              BackgroundColor="#D6B3D9">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20"
-                Spacing="20">
+        <ContentPage.Resources>
+                <ResourceDictionary>
+                        <cvt:SatuanColorConverter x:Key="SatuanColorConverter"/>
+                </ResourceDictionary>
+        </ContentPage.Resources>
+        <ContentPage.BindingContext>
+                <vm:GudangViewModel/>
+        </ContentPage.BindingContext>
 
-            <!-- HEADER -->
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <Label Text="←"
-                        FontSize="20"
-                        VerticalOptions="Center"/>
-                <Label Grid.Column="1"
-                       Text="Input Inventory"
-                       FontSize="28"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"/>
-                <Label Grid.Column="2"
-                        Text="?"
-                        FontSize="20"
-                        VerticalOptions="Center"/>
-            </Grid>
+        <ScrollView>
+                <VerticalStackLayout Padding="20"
+                                     Spacing="20">
 
-            <!-- FORM INPUT -->
-            <Frame BackgroundColor="#F2F2F2"
-                    CornerRadius="25"
-                    Padding="20">
-                <VerticalStackLayout Spacing="15">
+                        <!-- HEADER -->
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Text="←"
+                                       FontSize="20"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                                       Text="Input Inventory"
+                                       FontSize="28"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Grid.Column="2"
+                                       Text="?"
+                                       FontSize="20"
+                                       VerticalOptions="Center"/>
+                        </Grid>
 
-                    <Label Text="Nama Bahan Baku"
-                            FontAttributes="Bold"/>
-                    <Frame CornerRadius="15"
-                            Padding="0"
-                            BorderColor="#D6B3D9">
-                        <Picker Title="Pilih bahan"
-                                ItemsSource="{Binding DaftarBahan}"
-                                SelectedItem="{Binding BahanDipilih}"
-                                ItemDisplayBinding="{Binding NamaBarang}"/>
-                    </Frame>
+                        <!-- FORM INPUT -->
+                        <Frame BackgroundColor="#F2F2F2"
+                               CornerRadius="25"
+                               Padding="20">
+                                <VerticalStackLayout Spacing="15">
 
-                    <Label Text="Kategori"
-                            FontAttributes="Bold"/>
-                    <Frame CornerRadius="15"
-                            Padding="0"
-                            BorderColor="#D6B3D9">
-                        <Picker Title="Pilih kategori"
-                                ItemsSource="{Binding DaftarKategori}"
-                                SelectedItem="{Binding KategoriDipilih}"/>
-                    </Frame>
+                                        <Label Text="Nama Bahan Baku"
+                                               FontAttributes="Bold"/>
+                                        <Frame CornerRadius="15"
+                                               Padding="0"
+                                               BorderColor="#D6B3D9">
+                                                <Picker Title="Pilih bahan"
+                                                        ItemsSource="{Binding DaftarBahan}"
+                                                        SelectedItem="{Binding BahanDipilih}"
+                                                        ItemDisplayBinding="{Binding NamaBarang}"/>
+                                        </Frame>
 
-                    <Label Text="Jumlah Bahan Masuk"
-                            FontAttributes="Bold"/>
-                    <Frame CornerRadius="15"
-                            Padding="0"
-                            BorderColor="#D6B3D9">
-                        <Entry Placeholder="Masukkan jumlah"
-                               Keyboard="Numeric"
-                               Text="{Binding JumlahMasuk}"/>
-                    </Frame>
+                                        <Label Text="Kategori"
+                                               FontAttributes="Bold"/>
+                                        <Frame CornerRadius="15"
+                                               Padding="0"
+                                               BorderColor="#D6B3D9">
+                                                <Picker Title="Pilih kategori"
+                                                        ItemsSource="{Binding DaftarKategori}"
+                                                        SelectedItem="{Binding KategoriDipilih}"/>
+                                        </Frame>
 
-                    <Label Text="Satuan"
-                            FontAttributes="Bold"/>
-                    <Grid ColumnDefinitions="*,*,*"
-                            BackgroundColor="#E3C6E8"
-                            Padding="5">
-                        <Button Text="Kg"
-                                CornerRadius="15"
-                                Command="{Binding PilihSatuanCommand}"
-                                CommandParameter="Kg"
-                                BackgroundColor="{Binding SatuanDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Kg}"/>
-                        <Button Text="Butir"
-                                Grid.Column="1"
-                                CornerRadius="15"
-                                Command="{Binding PilihSatuanCommand}"
-                                CommandParameter="Butir"
-                                BackgroundColor="{Binding SatuanDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Butir}"/>
-                        <Button Text="Liter"
-                                Grid.Column="2"
-                                CornerRadius="15"
-                                Command="{Binding PilihSatuanCommand}"
-                                CommandParameter="Liter"
-                                BackgroundColor="{Binding SatuanDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Liter}"/>
-                    </Grid>
+                                        <Label Text="Jumlah Bahan Masuk"
+                                               FontAttributes="Bold"/>
+                                        <Frame CornerRadius="15"
+                                               Padding="0"
+                                               BorderColor="#D6B3D9">
+                                                <Entry Placeholder="Masukkan jumlah"
+                                                       Keyboard="Numeric"
+                                                       Text="{Binding JumlahMasuk}"/>
+                                        </Frame>
 
-                    <Label Text="Tanggal Masuk"
-                            FontAttributes="Bold"/>
-                    <Frame CornerRadius="15"
-                            Padding="5"
-                            BorderColor="#D6B3D9">
-                        <DatePicker Date="{Binding TanggalMasuk}"/>
-                    </Frame>
+                                        <Label Text="Satuan"
+                                               FontAttributes="Bold"/>
+                                        <Grid ColumnDefinitions="*,*,*"
+                                              BackgroundColor="#E3C6E8"
+                                              Padding="5">
+                                                <Button Text="Kg"
+                                                        CornerRadius="15"
+                                                        Command="{Binding PilihSatuanCommand}"
+                                                        CommandParameter="Kg"
+                                                        BackgroundColor="{Binding SatuanDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Kg}"/>
+                                                <Button Text="Butir"
+                                                        Grid.Column="1"
+                                                        CornerRadius="15"
+                                                        Command="{Binding PilihSatuanCommand}"
+                                                        CommandParameter="Butir"
+                                                        BackgroundColor="{Binding SatuanDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Butir}"/>
+                                                <Button Text="Liter"
+                                                        Grid.Column="2"
+                                                        CornerRadius="15"
+                                                        Command="{Binding PilihSatuanCommand}"
+                                                        CommandParameter="Liter"
+                                                        BackgroundColor="{Binding SatuanDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Liter}"/>
+                                        </Grid>
 
-                    <Label Text="Tanggal Expired"
-                            FontAttributes="Bold"/>
-                    <Frame CornerRadius="15"
-                            Padding="5"
-                            BorderColor="#D6B3D9">
-                        <DatePicker Date="{Binding TanggalExpired}"/>
-                    </Frame>
+                                        <Label Text="Tanggal Masuk"
+                                               FontAttributes="Bold"/>
+                                        <Frame CornerRadius="15"
+                                               Padding="5"
+                                               BorderColor="#D6B3D9">
+                                                <DatePicker Date="{Binding TanggalMasuk}"/>
+                                        </Frame>
 
-                    <Button Text="Simpan Stock"
-                            BackgroundColor="#D6B3D9"
-                            TextColor="Black"
-                            CornerRadius="20"
-                            Margin="0,10,0,0"
-                            Command="{Binding SimpanStokCommand}"/>
+                                        <Label Text="Tanggal Expired"
+                                               FontAttributes="Bold"/>
+                                        <Frame CornerRadius="15"
+                                               Padding="5"
+                                               BorderColor="#D6B3D9">
+                                                <DatePicker Date="{Binding TanggalExpired}"/>
+                                        </Frame>
+
+                                        <Button Text="Simpan Stock"
+                                                BackgroundColor="#D6B3D9"
+                                                TextColor="Black"
+                                                CornerRadius="20"
+                                                Margin="0,10,0,0"
+                                                Command="{Binding SimpanStokCommand}"/>
+
+                                </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- RIWAYAT INPUT -->
+                        <Frame BackgroundColor="#F2F2F2"
+                               CornerRadius="25"
+                               Padding="20">
+                                <VerticalStackLayout Spacing="15">
+
+                                        <Grid ColumnDefinitions="*,Auto">
+                                                <Label Text="Riwayat Input Stock"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold"/>
+                                                <Label Grid.Column="1"
+                                                       Text="📅"/>
+                                        </Grid>
+
+                                        <CollectionView ItemsSource="{Binding RiwayatInputList}">
+                                                <CollectionView.ItemTemplate>
+                                                        <DataTemplate>
+                                                                <Frame CornerRadius="20"
+                                                                       BorderColor="#D6B3D9"
+                                                                       Padding="10"
+                                                                       Margin="0,5">
+                                                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                                                                <Label Text="🧺"
+                                                                                       FontSize="28"/>
+                                                                                <VerticalStackLayout Grid.Column="1"
+                                                                                                     Spacing="2">
+                                                                                        <Label Text="{Binding NamaBahan}"
+                                                                                               FontAttributes="Bold"/>
+                                                                                        <Label Text="{Binding InfoLabel}"
+                                                                                               FontSize="12"/>
+                                                                                </VerticalStackLayout>
+                                                                                <Label Grid.Column="2"
+                                                                                       Text="{Binding WaktuInput}"
+                                                                                       VerticalOptions="Center"/>
+                                                                        </Grid>
+                                                                </Frame>
+                                                        </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                        </CollectionView>
+
+                                </VerticalStackLayout>
+                        </Frame>
 
                 </VerticalStackLayout>
-            </Frame>
-
-            <!-- RIWAYAT INPUT -->
-            <Frame BackgroundColor="#F2F2F2"
-                    CornerRadius="25"
-                    Padding="20">
-                <VerticalStackLayout Spacing="15">
-
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="Riwayat Input Stock"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
-                        <Label Grid.Column="1"
-                                Text="📅"/>
-                    </Grid>
-
-                    <CollectionView ItemsSource="{Binding RiwayatInputList}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame CornerRadius="20"
-                                       BorderColor="#D6B3D9"
-                                       Padding="10"
-                                       Margin="0,5">
-                                    <Grid ColumnDefinitions="Auto,*,Auto">
-                                        <Label Text="🧺"
-                                                FontSize="28"/>
-                                        <VerticalStackLayout Grid.Column="1"
-                                                Spacing="2">
-                                            <Label Text="{Binding NamaBahan}"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding InfoLabel}"
-                                                   FontSize="12"/>
-                                        </VerticalStackLayout>
-                                        <Label Grid.Column="2"
-                                               Text="{Binding WaktuInput}"
-                                               VerticalOptions="Center"/>
-                                    </Grid>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                </VerticalStackLayout>
-            </Frame>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
 
 </ContentPage>

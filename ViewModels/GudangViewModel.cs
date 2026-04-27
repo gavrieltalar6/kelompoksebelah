@@ -9,27 +9,22 @@ namespace CakeProject.ViewModels;
 
 public class GudangViewModel : INotifyPropertyChanged
 {
+    // Mengacu ke satu sumber data yang sama di seluruh aplikasi
     private readonly MenuStore _store;
 
-    // === COLLECTIONS ===
+    // === COLLECTIONS (Data untuk ditampilkan di layar) ===
     public ObservableCollection<StokBaku> DaftarBahan { get; set; } = new();
-    public ObservableCollection<RiwayatInput> RiwayatInputList { get; set; } = new();
+    public ObservableCollection<RiwayatInputData> RiwayatInputList { get; set; } = new();
+    
     public List<string> DaftarKategori { get; set; } = new() { "Tepung", "Telur & Susu", "Gula & Lemak", "Lainnya" };
     public List<string> DaftarSatuan { get; set; } = new() { "Kg", "Butir", "Liter" };
 
-    // === FORM PROPERTIES ===
+    // === FORM PROPERTIES (Tempat menampung input dari UI) ===
     private StokBaku _bahanDipilih;
     public StokBaku BahanDipilih
     {
         get => _bahanDipilih;
         set { _bahanDipilih = value; OnPropertyChanged(); }
-    }
-
-    private string _kategoriDipilih;
-    public string KategoriDipilih
-    {
-        get => _kategoriDipilih;
-        set { _kategoriDipilih = value; OnPropertyChanged(); }
     }
 
     private double _jumlahMasuk;
@@ -46,13 +41,6 @@ public class GudangViewModel : INotifyPropertyChanged
         set { _satuanDipilih = value; OnPropertyChanged(); }
     }
 
-    private DateTime _tanggalMasuk = DateTime.Today;
-    public DateTime TanggalMasuk
-    {
-        get => _tanggalMasuk;
-        set { _tanggalMasuk = value; OnPropertyChanged(); }
-    }
-
     private DateTime _tanggalExpired = DateTime.Today.AddMonths(6);
     public DateTime TanggalExpired
     {
@@ -64,36 +52,45 @@ public class GudangViewModel : INotifyPropertyChanged
     public ICommand SimpanStokCommand { get; }
     public ICommand PilihSatuanCommand { get; }
 
-    // Ganti constructor
+    // === CONSTRUCTOR ===
     public GudangViewModel()
     {
-        _store = new MenuStore();
+        // Hubungkan ke Pusat Data di App.xaml.cs
+        _store = App.TokoData;
 
+        // Inisialisasi tombol-tombol
         SimpanStokCommand = new Command(async () => await SimpanStok());
         PilihSatuanCommand = new Command<string>(s => SatuanDipilih = s);
 
-        // Load async
-        Task.Run(async () => await InitAsync());
+        // Ambil data yang sudah ada di memori Pusat Data
+        LoadDataAwal();
     }
 
-    private async Task InitAsync()
+    private void LoadDataAwal()
     {
-        await _store.MuatSemuaAsync();
+        DaftarBahan.Clear();
+        foreach (var b in _store.DaftarBahan) 
+            DaftarBahan.Add(b);
 
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            foreach (var b in _store.DaftarBahan) DaftarBahan.Add(b);
-            foreach (var r in _store.DaftarRiwayat) RiwayatInputList.Add(r);
-        });
+        RiwayatInputList.Clear();
+        foreach (var r in _store.DaftarRiwayat) 
+            RiwayatInputList.Add(r);
     }
 
     private async Task SimpanStok()
     {
-        if (BahanDipilih == null || JumlahMasuk <= 0) return;
+        // Validasi: Cek apakah user sudah pilih bahan dan isi jumlahnya
+        if (BahanDipilih == null || JumlahMasuk <= 0)
+        {
+            await Application.Current.MainPage.DisplayAlert("Peringatan", "Pilih bahan dan masukkan jumlah yang benar!", "OK");
+            return;
+        }
 
+        // 1. Update jumlah stok di objek bahan baku
         BahanDipilih.TambahStok(JumlahMasuk);
         BahanDipilih.TglExpired = TanggalExpired;
 
+        // 2. Buat data riwayat baru
         var riwayat = new RiwayatInputData
         {
             NamaBahan = BahanDipilih.NamaBarang,
@@ -102,55 +99,25 @@ public class GudangViewModel : INotifyPropertyChanged
             WaktuInput = DateTime.Now.ToString("h:mm tt")
         };
 
+        // 3. Masukkan riwayat ke Pusat Data (supaya bisa disimpan ke JSON)
         _store.DaftarRiwayat.Insert(0, riwayat);
+
+        // 4. Masukkan ke list UI agar langsung muncul di layar
         RiwayatInputList.Insert(0, riwayat);
 
-        // Simpan ke JSON
+        // 5. PERMANENKAN: Simpan ke file JSON
         await _store.SimpanBahanAsync();
         await _store.SimpanRiwayatAsync();
 
+        // 6. Reset form input agar kosong kembali
         JumlahMasuk = 0;
         BahanDipilih = null;
-    }
-    private void LoadData()
-    {
-        foreach (var bahan in _store.DaftarBahan)
-            DaftarBahan.Add(bahan);
+
+        await Application.Current.MainPage.DisplayAlert("Sukses", "Stok berhasil ditambahkan!", "OK");
     }
 
-    private void SimpanStok()
-    {
-        if (BahanDipilih == null || JumlahMasuk <= 0) return;
-
-        // Update stok di dummy data
-        BahanDipilih.TambahStok(JumlahMasuk);
-        BahanDipilih.TglExpired = TanggalExpired;
-
-        // Tambah ke riwayat
-        RiwayatInputList.Insert(0, new RiwayatInput
-        {
-            NamaBahan = BahanDipilih.NamaBarang,
-            Satuan = SatuanDipilih,
-            TanggalExpired = TanggalExpired,
-            WaktuInput = DateTime.Now.ToString("h:mm tt")
-        });
-
-        // Reset form
-        JumlahMasuk = 0;
-        BahanDipilih = null;
-    }
-
+    // === BOILERPLATE MVVM ===
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-}
-
-// Helper class untuk riwayat
-public class RiwayatInput
-{
-    public string NamaBahan { get; set; }
-    public string Satuan { get; set; }
-    public DateTime TanggalExpired { get; set; }
-    public string WaktuInput { get; set; }
-    public string InfoLabel => $"{Satuan}, {TanggalExpired:d MMMM yyyy}";
 }

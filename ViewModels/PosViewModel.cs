@@ -66,8 +66,8 @@ public class PosViewModel : INotifyPropertyChanged
 
     public PosViewModel()
     {
-        _store = new MenuStore();
-        _store.InisialisasiData();
+        // REVISI 1: Gunakan Pusat Data dari App.xaml.cs
+        _store = App.TokoData;
 
         TambahKeKeranjangCommand = new Command<StokProduk>(TambahKeKeranjang);
         TambahJumlahCommand = new Command<KeranjangItem>(item =>
@@ -86,13 +86,16 @@ public class PosViewModel : INotifyPropertyChanged
             Keranjang.Clear();
             RefreshTotal();
         });
-        BayarCommand = new Command(Bayar, () => Keranjang.Count > 0);
+        
+        // REVISI 2: Jadikan async karena akan menyimpan file
+        BayarCommand = new Command(async () => await Bayar(), () => Keranjang.Count > 0);
 
         LoadProduk();
     }
 
     private void LoadProduk()
     {
+        DaftarProduk.Clear();
         foreach (var p in _store.DaftarProduk)
             DaftarProduk.Add(p);
     }
@@ -121,11 +124,14 @@ public class PosViewModel : INotifyPropertyChanged
     {
         OnPropertyChanged(nameof(TotalHarga));
         OnPropertyChanged(nameof(TotalHargaText));
+        // Update status tombol bayar
+        ((Command)BayarCommand).ChangeCanExecute();
     }
 
-    private void Bayar()
+    private async Task Bayar()
     {
-        var transaksi = new Penjualan
+        // REVISI 3: Pastikan menggunakan class PenjualanData yang ada di MenuStore
+        var transaksi = new PenjualanData
         {
             IDTransaksi = new Random().Next(1000, 9999),
             Tanggal = DateTime.Now,
@@ -134,9 +140,17 @@ public class PosViewModel : INotifyPropertyChanged
             MetodeBayar = "Tunai"
         };
 
-        // nanti bisa disimpan ke JSON di sini
+        // 1. Masukkan ke list Pusat Data
+        _store.DaftarPenjualan.Add(transaksi);
+
+        // 2. SIMPAN PERMANEN KE JSON
+        await _store.SimpanPenjualanAsync();
+
+        // 3. Reset UI
         Keranjang.Clear();
         RefreshTotal();
+
+        await Application.Current.MainPage.DisplayAlert("Sukses", "Transaksi Berhasil Disimpan!", "OK");
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

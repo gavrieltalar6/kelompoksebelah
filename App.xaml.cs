@@ -4,13 +4,16 @@ namespace CakeProject;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
-	}
+    public static Data.MenuStore TokoData { get; } = new Data.MenuStore();
 
-	protected override Window CreateWindow(IActivationState? activationState)
-	{
-		return new Window(new AppShell());
-	}
+    public App()
+    {
+        InitializeComponent();
+        Task.Run(async () => await TokoData.MuatSemuaAsync());
+    }
+
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
+    }
 }
