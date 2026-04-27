@@ -64,17 +64,54 @@ public class GudangViewModel : INotifyPropertyChanged
     public ICommand SimpanStokCommand { get; }
     public ICommand PilihSatuanCommand { get; }
 
+    // Ganti constructor
     public GudangViewModel()
     {
         _store = new MenuStore();
-        _store.InisialisasiData();
 
-        SimpanStokCommand = new Command(SimpanStok);
+        SimpanStokCommand = new Command(async () => await SimpanStok());
         PilihSatuanCommand = new Command<string>(s => SatuanDipilih = s);
 
-        LoadData();
+        // Load async
+        Task.Run(async () => await InitAsync());
     }
 
+    private async Task InitAsync()
+    {
+        await _store.MuatSemuaAsync();
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            foreach (var b in _store.DaftarBahan) DaftarBahan.Add(b);
+            foreach (var r in _store.DaftarRiwayat) RiwayatInputList.Add(r);
+        });
+    }
+
+    private async Task SimpanStok()
+    {
+        if (BahanDipilih == null || JumlahMasuk <= 0) return;
+
+        BahanDipilih.TambahStok(JumlahMasuk);
+        BahanDipilih.TglExpired = TanggalExpired;
+
+        var riwayat = new RiwayatInputData
+        {
+            NamaBahan = BahanDipilih.NamaBarang,
+            Satuan = SatuanDipilih,
+            TanggalExpired = TanggalExpired,
+            WaktuInput = DateTime.Now.ToString("h:mm tt")
+        };
+
+        _store.DaftarRiwayat.Insert(0, riwayat);
+        RiwayatInputList.Insert(0, riwayat);
+
+        // Simpan ke JSON
+        await _store.SimpanBahanAsync();
+        await _store.SimpanRiwayatAsync();
+
+        JumlahMasuk = 0;
+        BahanDipilih = null;
+    }
     private void LoadData()
     {
         foreach (var bahan in _store.DaftarBahan)
