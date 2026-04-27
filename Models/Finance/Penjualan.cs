@@ -1,4 +1,5 @@
 using System;
+using CakeProject.Models.Users;
 
 namespace CakeProject.Models.Finance
 {

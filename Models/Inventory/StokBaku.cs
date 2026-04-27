@@ -8,7 +8,7 @@ namespace CakeProject.Models.Inventory
 
         public bool CekKadaluarsa()
         {
-            return DateTime.Now > TglExpired;
+            return DateTime.Today > TglExpired.Date;
         }
     }
 }

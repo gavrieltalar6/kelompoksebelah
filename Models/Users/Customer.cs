@@ -17,7 +17,6 @@ public class Customer : User
         if (poinYangDitukar < 100)
             return (false, "Minimal penukaran 100 poin.", 0);
 
-        // Hitung diskon (100 poin = 10.000)
         int diskon = (poinYangDitukar / 100) * 10000;
 
         // Kurangi poin

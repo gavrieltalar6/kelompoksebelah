@@ -14,7 +14,16 @@ public class DapurViewModel : INotifyPropertyChanged
 
     private async Task AmbilBahan()
     {
-        if (BahanTerpilih == null || JumlahAmbil <= 0) return;
+        if (BahanTerpilih == null)
+        {
+            await Application.Current.MainPage.DisplayAlert("Peringatan", "Pilih bahan terlebih dahulu!", "OK");
+            return;
+        }
+        if (JumlahAmbil <= 0)
+        {
+            await Application.Current.MainPage.DisplayAlert("Peringatan", "Masukkan jumlah yang valid!", "OK");
+            return;
+        }
 
         bool berhasil = BahanTerpilih.KurangiStok(JumlahAmbil);
         if (!berhasil)
@@ -31,13 +40,37 @@ public class DapurViewModel : INotifyPropertyChanged
 
     private async Task SimpanProduksi()
     {
-        if (KueTerpilih == null || JumlahProduksi <= 0) return;
+        // PROTEKSI 1: Cek apakah user sudah pilih kue
+        if (KueTerpilih == null)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Pilih jenis kue terlebih dahulu!", "OK");
+            return;
+        }
 
-        KueTerpilih.TambahStok(JumlahProduksi);
-        await App.TokoData.SimpanProdukAsync();
-        JumlahProduksi = 0;
-        KueTerpilih = null;
-        await Application.Current.MainPage.DisplayAlert("Sukses", "Hasil produksi disimpan!", "OK");
+        // PROTEKSI 2: Cek jumlah produksi
+        if (JumlahProduksi <= 0)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Jumlah produksi harus lebih dari 0!", "OK");
+            return;
+        }
+
+        try
+        {
+            // Proses simpan
+            KueTerpilih.TambahStok(JumlahProduksi);
+            await App.TokoData.SimpanProdukAsync();
+
+            // Reset UI setelah sukses
+            foreach (var k in ListKueTersedia) k.IsAktif = false;
+            KueTerpilih = null;
+            JumlahProduksi = 0;
+
+            await Application.Current.MainPage.DisplayAlert("Sukses", "Data produksi berhasil dicatat", "OK");
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert("Crash Tercegah", $"Terjadi kesalahan: {ex.Message}", "OK");
+        }
     }
     private double _jumlahAmbil;
     public double JumlahAmbil
@@ -55,6 +88,7 @@ public class DapurViewModel : INotifyPropertyChanged
 
     public ICommand AmbilBahanCommand { get; }
     public ICommand SimpanProduksiCommand { get; }
+
     private StokBaku _bahanTerpilih;
     public StokBaku BahanTerpilih
     {
@@ -81,11 +115,29 @@ public class DapurViewModel : INotifyPropertyChanged
 
     public DapurViewModel()
     {
+        // Load data dari data source (App.TokoData)
         foreach (var b in App.TokoData.DaftarBahan) ListBahanGudang.Add(b);
         foreach (var p in App.TokoData.DaftarProduk) ListKueTersedia.Add(p);
 
         PilihSatuanProduksiCommand = new Command<string>(s => SatuanProduksiDipilih = s);
-        PilihKueCommand = new Command<StokProduk>(k => KueTerpilih = k);
+
+        // Satukan logika PilihKue di sini
+        PilihKueCommand = new Command<StokProduk>(kue =>
+        {
+            if (kue == null) return;
+
+            // 1. Matikan SEMUA tombol (Reset ke Ungu)
+            foreach (var k in ListKueTersedia)
+            {
+                k.IsAktif = false;
+            }
+
+            // 2. Aktifkan tombol yang baru diklik (Jadi Hijau)
+            kue.IsAktif = true;
+
+            // 3. Update referensi KueTerpilih
+            KueTerpilih = kue;
+        });
 
         AmbilBahanCommand = new Command(async () => await AmbilBahan());
         SimpanProduksiCommand = new Command(async () => await SimpanProduksi());
