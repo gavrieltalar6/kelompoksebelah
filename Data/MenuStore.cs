@@ -3,10 +3,12 @@ using CakeProject.Models.Inventory;
 using System.Collections.Generic;
 
 namespace CakeProject.Data;
+
 public class MenuStore
 {
     public List<ListKue> DaftarMenu { get; set; } = new List<ListKue>();
     public List<StokBaku> DaftarBahan { get; set; } = new List<StokBaku>();
+    public List<StokProduk> DaftarProduk { get; set; } = new List<StokProduk>();
 
     public void InisialisasiData()
     {
@@ -25,5 +27,12 @@ public class MenuStore
         var bahanBrownies = new Dictionary<string, double> { { "Cokelat", 200 }, { "Telur", 2 } };
         ResepKue resepBrownies = new ResepKue(bahanBrownies, 0.75);
         DaftarMenu.Add(new ListKue { NamaKue = "Fudgy Brownies", DetailResep = resepBrownies });
+
+        // --- PRODUK DIJUAL ---
+        DaftarProduk.Add(new StokProduk { IDBarang = 101, NamaBarang = "Kue Tiramisu", HargaBeli = 15000, HargaJual = 20000, JumlahStok = 10, Satuan = "Pcs", TglExpired = new DateTime(2027, 3, 25) });
+        DaftarProduk.Add(new StokProduk { IDBarang = 102, NamaBarang = "Kue Balok Cokelat", HargaBeli = 35000, HargaJual = 50000, JumlahStok = 8, Satuan = "Pcs", TglExpired = new DateTime(2027, 3, 25) });
+        DaftarProduk.Add(new StokProduk { IDBarang = 103, NamaBarang = "Kue Ultah Vanila", HargaBeli = 75000, HargaJual = 100000, JumlahStok = 5, Satuan = "Pcs", TglExpired = new DateTime(2027, 3, 25) });
+        DaftarProduk.Add(new StokProduk { IDBarang = 104, NamaBarang = "Fudgy Brownies", HargaBeli = 100000, HargaJual = 150000, JumlahStok = 6, Satuan = "Pcs", TglExpired = new DateTime(2027, 3, 25) });
+        DaftarProduk.Add(new StokProduk { IDBarang = 105, NamaBarang = "Kue Roblox", HargaBeli = 120000, HargaJual = 170000, JumlahStok = 3, Satuan = "Pcs", TglExpired = new DateTime(2027, 3, 25) });
     }
 }
