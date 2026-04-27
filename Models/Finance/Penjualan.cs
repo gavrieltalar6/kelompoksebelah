@@ -2,6 +2,7 @@ using System;
 using CakeProject.Models.Users;
 
 namespace CakeProject.Models.Finance
+
 {
     public class Penjualan : Transaksi
     {
