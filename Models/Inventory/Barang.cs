@@ -1,11 +1,21 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace CakeProject.Models.Inventory
 {
-    public class Barang
+    public class Barang : INotifyPropertyChanged
     {
         public int IDBarang { get; set; }
         public string NamaBarang { get; set; }
         public int HargaBeli { get; set; }
-        public double JumlahStok { get; set; }
+        
+        private double _jumlahStok;
+        public double JumlahStok
+        {
+            get => _jumlahStok;
+            set { _jumlahStok = value; OnPropertyChanged(); }
+        }
+
         public double MinimalStok { get; set; }
         public string Satuan { get; set; }
 
@@ -24,9 +34,10 @@ namespace CakeProject.Models.Inventory
             return false;
         }
 
-        public bool CekStokRendah()
-        {
-            return JumlahStok < MinimalStok;
-        }
+        public bool CekStokRendah() => JumlahStok < MinimalStok;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

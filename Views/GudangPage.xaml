@@ -11,9 +11,6 @@
                         <cvt:SatuanColorConverter x:Key="SatuanColorConverter"/>
                 </ResourceDictionary>
         </ContentPage.Resources>
-        <ContentPage.BindingContext>
-                <vm:GudangViewModel/>
-        </ContentPage.BindingContext>
 
         <ScrollView>
                 <VerticalStackLayout Padding="20"

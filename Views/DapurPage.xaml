@@ -8,38 +8,54 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <cvt:SatuanColorConverter x:Key="SatuanColorConverter" />
+            <cvt:SatuanColorConverter x:Key="SatuanColorConverter"/>
+            <cvt:BoolToColorConverter x:Key="BoolToColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="20"
+                             Spacing="20">
 
             <Grid ColumnDefinitions="Auto,*,Auto">
-                <Label Text="←" FontSize="20" VerticalOptions="Center"/>
-                <Label Grid.Column="1" Text="Manajemen Dapur" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
-                <Label Grid.Column="2" Text="?" FontSize="20" VerticalOptions="Center"/>
+                <Label Text="←"
+                       FontSize="20"
+                       VerticalOptions="Center"/>
+                <Label Grid.Column="1"
+                       Text="Manajemen Dapur"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+                <Label Grid.Column="2"
+                       Text="?"
+                       FontSize="20"
+                       VerticalOptions="Center"/>
             </Grid>
 
-            <Frame BackgroundColor="#F2F2F2" CornerRadius="25" Padding="20">
+            <Frame BackgroundColor="#F2F2F2"
+                   CornerRadius="25"
+                   Padding="20">
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Ambil Bahan dari Gudang" FontAttributes="Bold" FontSize="18"/>
-
+                    <Label Text="Ambil Bahan dari Gudang"
+                           FontAttributes="Bold"
+                           FontSize="18"/>
                     <Label Text="Pilih Bahan Baku"/>
-                    <Frame CornerRadius="15" Padding="0" BorderColor="#D6B3D9">
-                        <Picker Title="Pilih bahan..." 
+                    <Frame CornerRadius="15"
+                           Padding="0"
+                           BorderColor="#D6B3D9">
+                        <Picker Title="Pilih bahan..."
                                 ItemsSource="{Binding ListBahanGudang}"
                                 ItemDisplayBinding="{Binding NamaBarang}"
                                 SelectedItem="{Binding BahanTerpilih}"/>
                     </Frame>
-
                     <Label Text="Jumlah Bahan Diambil"/>
-                    <Frame CornerRadius="15" Padding="0" BorderColor="#D6B3D9">
-                        <Entry Keyboard="Numeric" 
-                               Text="{Binding JumlahAmbil}" 
+                    <Frame CornerRadius="15"
+                           Padding="0"
+                           BorderColor="#D6B3D9">
+                        <Entry Keyboard="Numeric"
+                               Text="{Binding JumlahAmbil}"
                                Placeholder="Contoh: 5"/>
                     </Frame>
-
                     <Button Text="Proses Pengambilan"
                             Command="{Binding AmbilBahanCommand}"
                             BackgroundColor="#D6B3D9"
@@ -48,20 +64,35 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame BackgroundColor="#F2F2F2" CornerRadius="25" Padding="20">
+            <Frame BackgroundColor="#F2F2F2"
+                   CornerRadius="25"
+                   Padding="20">
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="Status Stok Baku Saat Ini" FontAttributes="Bold" FontSize="18"/>
-                    
+                    <Label Text="Status Stok Baku Saat Ini"
+                           FontAttributes="Bold"
+                           FontSize="18"/>
                     <CollectionView ItemsSource="{Binding ListBahanGudang}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame CornerRadius="20" BackgroundColor="#8FE388" Margin="0,5" Padding="5">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="10">
-                                        <Label Text="✔" VerticalOptions="Center"/>
-                                        <Label Grid.Column="1" Text="{Binding NamaBarang}" Margin="10,0" VerticalOptions="Center" FontAttributes="Bold"/>
-                                        <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center">
+                                <Frame CornerRadius="20"
+                                       BackgroundColor="#8FE388"
+                                       Margin="0,5"
+                                       Padding="5">
+                                    <Grid ColumnDefinitions="Auto,*,Auto"
+                                          Padding="10">
+                                        <Label Text="✔"
+                                               VerticalOptions="Center"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding NamaBarang}"
+                                               Margin="10,0"
+                                               VerticalOptions="Center"
+                                               FontAttributes="Bold"/>
+                                        <StackLayout Grid.Column="2"
+                                                     Orientation="Horizontal"
+                                                     VerticalOptions="Center">
                                             <Label Text="{Binding JumlahStok}"/>
-                                            <Label Text="{Binding Satuan}" Margin="5,0,0,0"/>
+                                            <Label Text="{Binding Satuan}"
+                                                   Margin="5,0,0,0"/>
                                         </StackLayout>
                                     </Grid>
                                 </Frame>
@@ -71,36 +102,46 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame BackgroundColor="#F2F2F2" CornerRadius="25" Padding="20">
+            <Frame BackgroundColor="#F2F2F2"
+                   CornerRadius="25"
+                   Padding="20">
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Catat Hasil Produksi" FontAttributes="Bold" FontSize="18"/>
-
+                    <Label Text="Catat Hasil Produksi"
+                           FontAttributes="Bold"
+                           FontSize="18"/>
                     <Label Text="Pilih Produk Hasil"/>
-                    <CollectionView ItemsSource="{Binding ListKueTersedia}" HeightRequest="55">
+
+                    <CollectionView ItemsSource="{Binding ListKueTersedia}"
+                                    HeightRequest="55">
                         <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                            <LinearItemsLayout Orientation="Horizontal"
+                                               ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Button Text="{Binding NamaBarang}"
                                         FontSize="12"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DapurViewModel}}, Path=PilihKueCommand}"
+                                        CornerRadius="15"
+                                        TextColor="Black"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PilihKueCommand}"
                                         CommandParameter="{Binding .}"
-                                        BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type vm:DapurViewModel}}, Path=KueTerpilih.NamaBarang, 
-                                                         Converter={StaticResource SatuanColorConverter}, 
-                                                         ConverterParameter={Binding NamaBarang}}"
-                                        CornerRadius="15"/>
+                                        BackgroundColor="{Binding IsAktif, Converter={StaticResource BoolToColorConverter}}"/>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
                     <Label Text="Jumlah Hasil Produksi"/>
-                    <Frame CornerRadius="15" Padding="0" BorderColor="#D6B3D9">
-                        <Entry Keyboard="Numeric" Text="{Binding JumlahProduksi}"/>
+                    <Frame CornerRadius="15"
+                           Padding="0"
+                           BorderColor="#D6B3D9">
+                        <Entry Keyboard="Numeric"
+                               Text="{Binding JumlahProduksi}"/>
                     </Frame>
 
                     <Label Text="Satuan Produksi"/>
-                    <Grid ColumnDefinitions="*,*" BackgroundColor="#E3C6E8" Padding="5">
+                    <Grid ColumnDefinitions="*,*"
+                          BackgroundColor="#E3C6E8"
+                          Padding="5">
                         <Button Text="Pcs"
                                 Command="{Binding PilihSatuanProduksiCommand}"
                                 CommandParameter="Pcs"
