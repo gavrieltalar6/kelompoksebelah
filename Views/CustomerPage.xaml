@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CakeProject.ViewModels"
+             x:Class="CakeProject.Views.CustomerPage"
+             BackgroundColor="#F1CBF1">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- HEADER -->
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label Text="👤" FontSize="28" VerticalOptions="Center"/>
+                <Label Grid.Column="1"
+                       Text="Data Customer"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Grid>
+
+            <!-- CARD 1: FORM TAMBAH CUSTOMER -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="20">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="Daftarkan Customer Baru"
+                           FontSize="18"
+                           FontAttributes="Bold"/>
+
+                    <!-- Nama -->
+                    <Label Text="Nama" FontSize="13" FontAttributes="Bold"/>
+                    <Frame CornerRadius="15" Padding="12,8" BorderColor="#D3D3D3" BackgroundColor="White">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="👤" VerticalOptions="Center" Margin="0,0,8,0"/>
+                            <Entry Grid.Column="1"
+                                   Placeholder="Masukkan nama customer"
+                                   Text="{Binding NamaBaru}"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- No HP -->
+                    <Label Text="No. HP" FontSize="13" FontAttributes="Bold"/>
+                    <Frame CornerRadius="15" Padding="12,8" BorderColor="#D3D3D3" BackgroundColor="White">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="📱" VerticalOptions="Center" Margin="0,0,8,0"/>
+                            <Entry Grid.Column="1"
+                                   Placeholder="Contoh: 081234567890"
+                                   Keyboard="Telephone"
+                                   Text="{Binding NoHpBaru}"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Toggle Member -->
+                    <Frame CornerRadius="15"
+                           Padding="15,10"
+                           BorderColor="#D3D3D3"
+                           BackgroundColor="#FAF0FA">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="Daftarkan sebagai Member?"
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label Text="Member bisa kumpulkan &amp; tukar poin"
+                                       FontSize="11"
+                                       TextColor="#888"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding IsMemberBaru}"
+                                    OnColor="#D6B3D9"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Pesan Status -->
+                    <Label Text="{Binding PesanStatus}"
+                           FontSize="13"
+                           TextColor="#A855A8"
+                           HorizontalOptions="Center"
+                           IsVisible="{Binding AdaPesan}"/>
+
+                    <!-- Tombol Daftarkan -->
+                    <Button Text="+ Daftarkan Customer"
+                            BackgroundColor="#D6B3D9"
+                            TextColor="Black"
+                            CornerRadius="20"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            Margin="0,5,0,0"
+                            Command="{Binding TambahCustomerCommand}"/>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- CARD 2: DAFTAR CUSTOMER -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="20">
+                <VerticalStackLayout Spacing="10">
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Daftar Customer"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <Label Grid.Column="1"
+                               Text="{Binding DaftarCustomer.Count, StringFormat='{0} customer'}"
+                               FontSize="13"
+                               TextColor="#888"
+                               VerticalOptions="Center"/>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" BackgroundColor="#E0E0E0"/>
+
+                    <!-- List Customer -->
+                    <CollectionView ItemsSource="{Binding DaftarCustomer}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,*,Auto"
+                                      Padding="0,8">
+
+                                    <!-- Avatar -->
+                                    <Frame Grid.Column="0"
+                                           CornerRadius="30"
+                                           HeightRequest="55"
+                                           WidthRequest="55"
+                                           BackgroundColor="#E3BCE3"
+                                           Padding="0"
+                                           BorderColor="Transparent"
+                                           Margin="0,0,12,0">
+                                        <Label Text="👤"
+                                               FontSize="26"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
+
+                                    <!-- Info -->
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Text="{Binding Nama}"
+                                                   FontAttributes="Bold"
+                                                   FontSize="14"/>
+                                            <!-- Badge Member -->
+                                            <Frame Grid.Column="1"
+                                                   BackgroundColor="#D6B3D9"
+                                                   CornerRadius="10"
+                                                   Padding="6,2"
+                                                   BorderColor="Transparent"
+                                                   IsVisible="{Binding IsMember}">
+                                                <Label Text="⭐ Member"
+                                                       FontSize="10"
+                                                       TextColor="#5A005A"/>
+                                            </Frame>
+                                        </Grid>
+                                        <Label Text="{Binding NoHP}"
+                                               FontSize="12"
+                                               TextColor="#666"/>
+                                        <Label Text="{Binding TotalPoin, StringFormat='🎁 {0} poin'}"
+                                               FontSize="12"
+                                               TextColor="#A855A8"
+                                               IsVisible="{Binding IsMember}"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Hapus -->
+                                    <Button Grid.Column="2"
+                                            Text="🗑"
+                                            FontSize="18"
+                                            BackgroundColor="Transparent"
+                                            VerticalOptions="Center"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HapusCustomerCommand}"
+                                            CommandParameter="{Binding .}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

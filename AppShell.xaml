@@ -32,4 +32,9 @@
         ContentTemplate="{DataTemplate views:PosPage}"
         Route="PosPage" />
 
+    <ShellContent
+        Title="Customer"
+        ContentTemplate="{DataTemplate views:CustomerPage}"
+        Route="CustomerPage" />
+
 </Shell>
