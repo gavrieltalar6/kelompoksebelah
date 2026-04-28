@@ -412,6 +412,12 @@ public class PosViewModel : INotifyPropertyChanged
         _store.DaftarPenjualan.Add(transaksi);
         await _store.SimpanPenjualanAsync();
 
+        // DEBUG SEMENTARA
+        await Application.Current.MainPage.DisplayAlert(
+            "Debug Simpan",
+            $"Total penjualan di memori: {_store.DaftarPenjualan.Count}",
+            "OK");
+
         // Update stok
         foreach (var item in Keranjang)
         {
