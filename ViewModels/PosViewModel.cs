@@ -412,12 +412,6 @@ public class PosViewModel : INotifyPropertyChanged
         _store.DaftarPenjualan.Add(transaksi);
         await _store.SimpanPenjualanAsync();
 
-        // DEBUG SEMENTARA
-        await Application.Current.MainPage.DisplayAlert(
-            "Debug Simpan",
-            $"Total penjualan di memori: {_store.DaftarPenjualan.Count}",
-            "OK");
-
         // Update stok
         foreach (var item in Keranjang)
         {
@@ -443,6 +437,13 @@ public class PosViewModel : INotifyPropertyChanged
         _poinDitukarText = "0";
         OnPropertyChanged(nameof(PoinDitukarText));
         RefreshTotal();
+
+    }
+    public void RefreshProduk()
+    {
+        DaftarProduk.Clear();
+        foreach (var p in _store.DaftarProduk)
+            DaftarProduk.Add(p);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

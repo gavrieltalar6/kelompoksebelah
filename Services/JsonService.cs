@@ -12,19 +12,9 @@ public static class JsonService
 
     public static async Task SimpanAsync<T>(string namaFile, T data)
     {
-        try
-        {
-            string path = Path.Combine(_folder, namaFile);
-            string json = JsonSerializer.Serialize(data, _options);
-            await File.WriteAllTextAsync(path, json);
-            System.Diagnostics.Debug.WriteLine($"SAVED OK: {path}");
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"SAVE ERROR: {ex.Message}");
-            // Tampilkan error supaya kelihatan
-            await Application.Current.MainPage.DisplayAlert("Save Error", ex.Message, "OK");
-        }
+        string path = Path.Combine(_folder, namaFile);
+        string json = JsonSerializer.Serialize(data, _options);
+        await File.WriteAllTextAsync(path, json);
     }
 
     public static async Task<T?> MuatAsync<T>(string namaFile)

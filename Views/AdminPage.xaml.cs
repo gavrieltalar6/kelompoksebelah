@@ -59,7 +59,22 @@ public partial class AdminPage : ContentPage
     {
         LaporanContainer.Children.Clear();
 
-        var data = App.TokoData.DaftarPenjualan.Take(5).ToList();
+        // Ambil 5 terbaru, diurutkan descending (terbaru dulu)
+        var data = App.TokoData.DaftarPenjualan
+            .OrderByDescending(p => p.Tanggal)
+            .Take(5)
+            .ToList();
+
+        if (data.Count == 0)
+        {
+            LaporanContainer.Children.Add(new Label
+            {
+                Text = "Belum ada transaksi",
+                TextColor = Colors.Gray,
+                HorizontalOptions = LayoutOptions.Center
+            });
+            return;
+        }
 
         foreach (var p in data)
         {

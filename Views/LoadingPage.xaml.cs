@@ -10,11 +10,16 @@ public partial class LoadingPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        
-        // Tunggu data selesai dimuat
-        await App.TokoData.MuatSemuaAsync();
-        
-        // Baru pindah ke AppShell
-        Application.Current.MainPage = new AppShell();
+        try
+        {
+            await App.TokoData.MuatSemuaAsync();
+            await DisplayAlert("Loading selesai",
+                $"Penjualan dimuat: {App.TokoData.DaftarPenjualan.Count}", "OK");
+            Application.Current.MainPage = new AppShell();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("ERROR", ex.Message + "\n\n" + ex.StackTrace, "OK");
+        }
     }
 }

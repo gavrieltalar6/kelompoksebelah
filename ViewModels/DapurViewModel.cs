@@ -40,37 +40,70 @@ public class DapurViewModel : INotifyPropertyChanged
 
     private async Task SimpanProduksi()
     {
-        // PROTEKSI 1: Cek apakah user sudah pilih kue
         if (KueTerpilih == null)
         {
             await Application.Current.MainPage.DisplayAlert("Error", "Pilih jenis kue terlebih dahulu!", "OK");
             return;
         }
-
-        // PROTEKSI 2: Cek jumlah produksi
         if (JumlahProduksi <= 0)
         {
             await Application.Current.MainPage.DisplayAlert("Error", "Jumlah produksi harus lebih dari 0!", "OK");
             return;
         }
 
-        try
-        {
-            // Proses simpan
-            KueTerpilih.TambahStok(JumlahProduksi);
-            await App.TokoData.SimpanProdukAsync();
+        // Cari resep dari DaftarMenu
+        var menu = App.TokoData.DaftarMenu
+            .FirstOrDefault(m => m.NamaKue == KueTerpilih.NamaBarang);
 
-            // Reset UI setelah sukses
-            foreach (var k in ListKueTersedia) k.IsAktif = false;
-            KueTerpilih = null;
-            JumlahProduksi = 0;
-
-            await Application.Current.MainPage.DisplayAlert("Sukses", "Data produksi berhasil dicatat", "OK");
-        }
-        catch (Exception ex)
+        if (menu?.DetailResep == null)
         {
-            await Application.Current.MainPage.DisplayAlert("Crash Tercegah", $"Terjadi kesalahan: {ex.Message}", "OK");
+            await Application.Current.MainPage.DisplayAlert("Error", "Resep tidak ditemukan!", "OK");
+            return;
         }
+
+        // Cek apakah semua bahan cukup
+        var kekurangan = new List<string>();
+        foreach (var bahan in menu.DetailResep.DaftarBahanBaku)
+        {
+            double jumlahDibutuhkan = bahan.Value * JumlahProduksi;
+            var stok = App.TokoData.DaftarBahan
+                .FirstOrDefault(b => b.NamaBarang == bahan.Key);
+
+            if (stok == null || stok.JumlahStok < jumlahDibutuhkan)
+                kekurangan.Add($"{bahan.Key}: butuh {jumlahDibutuhkan}, ada {stok?.JumlahStok ?? 0}");
+        }
+
+        if (kekurangan.Count > 0)
+        {
+            await Application.Current.MainPage.DisplayAlert(
+                "Stok Tidak Cukup",
+                "Bahan berikut kurang:\n" + string.Join("\n", kekurangan),
+                "OK");
+            return;
+        }
+
+        // Kurangi semua bahan sesuai resep x jumlah produksi
+        foreach (var bahan in menu.DetailResep.DaftarBahanBaku)
+        {
+            double jumlahDibutuhkan = bahan.Value * JumlahProduksi;
+            var stok = App.TokoData.DaftarBahan
+                .FirstOrDefault(b => b.NamaBarang == bahan.Key);
+            stok?.KurangiStok(jumlahDibutuhkan);
+        }
+
+        // Tambah stok produk
+        KueTerpilih.TambahStok(JumlahProduksi);
+
+        // Simpan ke JSON
+        await App.TokoData.SimpanBahanAsync();
+        await App.TokoData.SimpanProdukAsync();
+
+        // Reset UI
+        foreach (var k in ListKueTersedia) k.IsAktif = false;
+        KueTerpilih = null;
+        JumlahProduksi = 0;
+
+        await Application.Current.MainPage.DisplayAlert("Sukses", "Produksi dicatat dan stok bahan dikurangi!", "OK");
     }
     private double _jumlahAmbil;
     public double JumlahAmbil
@@ -141,6 +174,16 @@ public class DapurViewModel : INotifyPropertyChanged
 
         AmbilBahanCommand = new Command(async () => await AmbilBahan());
         SimpanProduksiCommand = new Command(async () => await SimpanProduksi());
+    }
+    public void RefreshData()
+    {
+        ListBahanGudang.Clear();
+        foreach (var b in App.TokoData.DaftarBahan)
+            ListBahanGudang.Add(b);
+
+        ListKueTersedia.Clear();
+        foreach (var p in App.TokoData.DaftarProduk)
+            ListKueTersedia.Add(p);
     }
     public event PropertyChangedEventHandler PropertyChanged;
     void OnPropertyChanged([CallerMemberName] string name = "") =>

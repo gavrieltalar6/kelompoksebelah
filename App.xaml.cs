@@ -8,10 +8,13 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        // Muat data synchronous sebelum app jalan
+        Task.Run(async () => await TokoData.MuatSemuaAsync()).Wait();
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        return new Window(new LoadingPage());
+        return new Window(new AppShell()); // ← langsung AppShell, tidak perlu LoadingPage
     }
 }

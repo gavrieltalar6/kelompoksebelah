@@ -8,33 +8,33 @@
     Title="CakeProject">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Admin"
+        ContentTemplate="{DataTemplate views:AdminPage}"
+        Route="AdminPage"/>
 
     <ShellContent
         Title="Gudang"
         ContentTemplate="{DataTemplate views:GudangPage}"
-        Route="GudangPage" />
+        Route="GudangPage"/>
 
     <ShellContent
         Title="Dapur"
         ContentTemplate="{DataTemplate views:DapurPage}"
-        Route="DapurPage" />
+        Route="DapurPage"/>
 
     <ShellContent
-        Title="Admin"
-        ContentTemplate="{DataTemplate views:AdminPage}"
-        Route="AdminPage" />
+        Title="Resep"
+        ContentTemplate="{DataTemplate views:ResepPage}"
+        Route="ResepPage"/>
 
     <ShellContent
         Title="POS"
         ContentTemplate="{DataTemplate views:PosPage}"
-        Route="PosPage" />
+        Route="PosPage"/>
 
     <ShellContent
         Title="Customer"
         ContentTemplate="{DataTemplate views:CustomerPage}"
-        Route="CustomerPage" />
+        Route="CustomerPage"/>
 
 </Shell>

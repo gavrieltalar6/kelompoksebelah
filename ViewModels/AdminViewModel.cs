@@ -76,32 +76,66 @@ public class AdminViewModel : INotifyPropertyChanged
             });
         }
 
-        var transaksiTerbaru = App.TokoData.DaftarPenjualan.FirstOrDefault();
+        var transaksiTerbaru = App.TokoData.DaftarPenjualan
+    .OrderByDescending(p => p.Tanggal)
+    .FirstOrDefault();
+
         if (transaksiTerbaru != null)
         {
-            var itemPertama = transaksiTerbaru.Items.FirstOrDefault();
-            if (itemPertama != null)
+            // Gabungkan semua item jadi satu string
+            var daftarItem = string.Join(", ", transaksiTerbaru.Items
+                .Select(i => $"{i.NamaProduk} x{i.Jumlah}"));
+
+            DaftarAlert.Add(new AlertItem
             {
-                DaftarAlert.Add(new AlertItem
-                {
-                    Icon = "🧾",
-                    Pesan = $"Transaksi #{transaksiTerbaru.IDTransaksi} : {itemPertama.NamaProduk} x{itemPertama.Jumlah}"
-                });
-            }
+                Icon = "🧾",
+                Pesan = $"Transaksi #{transaksiTerbaru.IDTransaksi} : {daftarItem}"
+            });
         }
 
         if (DaftarAlert.Count == 0)
             DaftarAlert.Add(new AlertItem { Icon = "✅", Pesan = "Semua stok aman, tidak ada alert." });
 
         // === LAPORAN ===
+        // === LAPORAN ===
         LaporanTerkini.Clear();
-        foreach (var p in App.TokoData.DaftarPenjualan.Take(5))
+        foreach (var p in App.TokoData.DaftarPenjualan
+            .OrderByDescending(p => p.Tanggal)
+            .Take(5))
             LaporanTerkini.Add(p);
-
         // === PRODUK ===
         DaftarProduk.Clear();
         foreach (var p in App.TokoData.DaftarProduk)
             DaftarProduk.Add(p);
+
+        // === KEUNTUNGAN ===
+        var hari = DateTime.Today;
+        var awalMinggu = hari.AddDays(-(int)hari.DayOfWeek);
+
+        double profitHariIni = 0;
+        double profitMingguIni = 0;
+
+        foreach (var transaksi in App.TokoData.DaftarPenjualan)
+        {
+            foreach (var item in transaksi.Items)
+            {
+                // Cari produk yang cocok untuk ambil HargaBeli
+                var produk = App.TokoData.DaftarProduk
+                    .FirstOrDefault(p => p.NamaBarang == item.NamaProduk);
+                if (produk == null) continue;
+
+                double profit = produk.HitungProfit() * item.Jumlah;
+
+                if (transaksi.Tanggal.Date == hari)
+                    profitHariIni += profit;
+
+                if (transaksi.Tanggal.Date >= awalMinggu)
+                    profitMingguIni += profit;
+            }
+        }
+
+        KeuntunganHariIni = $"Rp {profitHariIni:N0}";
+        KeuntunganMingguIni = $"Rp {profitMingguIni:N0}";
     }
 
     private async Task EditHarga(StokProduk produk)
@@ -125,6 +159,19 @@ public class AdminViewModel : INotifyPropertyChanged
         {
             await Application.Current.MainPage.DisplayAlert("Gagal", "Harga tidak valid!", "OK");
         }
+    }
+    private string _keuntunganHariIni = "Rp 0";
+    public string KeuntunganHariIni
+    {
+        get => _keuntunganHariIni;
+        set { _keuntunganHariIni = value; OnPropertyChanged(); }
+    }
+
+    private string _keuntunganMingguIni = "Rp 0";
+    public string KeuntunganMingguIni
+    {
+        get => _keuntunganMingguIni;
+        set { _keuntunganMingguIni = value; OnPropertyChanged(); }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
