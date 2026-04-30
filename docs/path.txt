@@ -10,8 +10,8 @@ mekanisme auto reduce bahan berdasarkan resep
 bug fixed: laporan penjualan terkini
 hitung keuntungan, tampilkan di admin 2 kolom "hari ini" dan "bulan ini"
 transaksi di pemberitahuan dan alert gabener
+stok kue yang telah diproduksi
+removed: loyang di satuan produksi
 
 next:
-
 functional navbar
-stok kue yang telah diproduksi

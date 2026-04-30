@@ -6,16 +6,25 @@
              BackgroundColor="#F1CBF1">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="20"
+                Spacing="20">
 
             <!-- HEADER -->
             <Grid ColumnDefinitions="Auto,*,Auto">
-                <Label Text="←" FontSize="28" FontAttributes="Bold" VerticalOptions="Center"/>
-                <Label Grid.Column="2" Text="?" FontSize="20" VerticalOptions="Center"/>
+                <Label Text="←"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"/>
+                <Label Grid.Column="2"
+                        Text="?"
+                        FontSize="20"
+                        VerticalOptions="Center"/>
             </Grid>
 
             <!-- CARD 1: PRODUK -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="20">
+            <Frame BackgroundColor="White"
+                    CornerRadius="20"
+                    Padding="20">
                 <VerticalStackLayout Spacing="15">
 
                     <!-- Search & Kategori -->
@@ -26,7 +35,9 @@
                                BorderColor="#D3D3D3"
                                Margin="0,0,10,0">
                             <Grid ColumnDefinitions="Auto,*">
-                                <Label Text="🔍" VerticalOptions="Center" Margin="0,0,8,0"/>
+                                <Label Text="🔍"
+                                        VerticalOptions="Center"
+                                        Margin="0,0,8,0"/>
                                 <Entry Grid.Column="1"
                                        Placeholder="Cari kue..."
                                        Text="{Binding KataCari}"/>
@@ -38,7 +49,9 @@
                                CornerRadius="20"
                                Padding="15,8"
                                BorderColor="Transparent">
-                            <Label Text="Kategori ▼" FontSize="12" VerticalOptions="Center"/>
+                            <Label Text="Kategori ▼"
+                                    FontSize="12"
+                                    VerticalOptions="Center"/>
                         </Frame>
                     </Grid>
 
@@ -74,6 +87,13 @@
                                     <Label Text="{Binding HargaJual, StringFormat='Rp {0:N0}'}"
                                            FontSize="12"
                                            HorizontalOptions="Center"/>
+
+                                    <!-- TAMBAH INI -->
+                                    <Label Text="{Binding JumlahStok, StringFormat='Stok: {0}'}"
+                                           FontSize="10"
+                                           HorizontalOptions="Center"
+                                           TextColor="{Binding JumlahStok, Converter={StaticResource StokColorConverter}}"/>
+
                                     <Button Text="+ Tambah"
                                             FontSize="10"
                                             BackgroundColor="#D6B3D9"
@@ -90,7 +110,9 @@
             </Frame>
 
             <!-- CARD 2: KERANJANG -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="20">
+            <Frame BackgroundColor="White"
+                    CornerRadius="20"
+                    Padding="20">
                 <VerticalStackLayout Spacing="10">
 
                     <!-- Header Keranjang -->
@@ -107,12 +129,20 @@
 
                     <!-- Table Header -->
                     <Grid ColumnDefinitions="2*,1*,1.5*">
-                        <Label Text="Produk" FontAttributes="Bold"/>
-                        <Label Grid.Column="1" Text="Qty" FontAttributes="Bold" HorizontalOptions="Center"/>
-                        <Label Grid.Column="2" Text="Subtotal" FontAttributes="Bold" HorizontalOptions="End"/>
+                        <Label Text="Produk"
+                                FontAttributes="Bold"/>
+                        <Label Grid.Column="1"
+                                Text="Qty"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"/>
+                        <Label Grid.Column="2"
+                                Text="Subtotal"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"/>
                     </Grid>
 
-                    <BoxView HeightRequest="1" BackgroundColor="Black"/>
+                    <BoxView HeightRequest="1"
+                            BackgroundColor="Black"/>
 
                     <!-- Item Keranjang -->
                     <CollectionView ItemsSource="{Binding Keranjang}">
@@ -189,7 +219,9 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <BoxView HeightRequest="1" BackgroundColor="Black" Margin="0,10"/>
+                    <BoxView HeightRequest="1"
+                            BackgroundColor="Black"
+                            Margin="0,10"/>
 
                     <!-- Total -->
                     <Grid ColumnDefinitions="*,Auto">
@@ -204,7 +236,9 @@
                     </Grid>
 
                     <!-- ===== SECTION MEMBER ===== -->
-                    <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" Margin="0,5"/>
+                    <BoxView HeightRequest="1"
+                            BackgroundColor="#E0E0E0"
+                            Margin="0,5"/>
 
                     <Label Text="Member (Opsional)"
                            FontAttributes="Bold"
@@ -216,14 +250,17 @@
                         <Label Text="No. HP Customer"
                                FontAttributes="Bold"
                                FontSize="14"/>
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Grid ColumnDefinitions="*,Auto"
+                                ColumnSpacing="8">
                             <Frame Grid.Column="0"
                                    CornerRadius="15"
                                    Padding="12,8"
                                    BorderColor="#D3D3D3"
                                    BackgroundColor="White">
                                 <Grid ColumnDefinitions="Auto,*">
-                                    <Label Text="📱" VerticalOptions="Center" Margin="0,0,8,0"/>
+                                    <Label Text="📱"
+                                            VerticalOptions="Center"
+                                            Margin="0,0,8,0"/>
                                     <Entry Grid.Column="1"
                                            Placeholder="Contoh: 081234567890"
                                            Keyboard="Telephone"
@@ -267,7 +304,9 @@
                                BorderColor="#D3D3D3"
                                BackgroundColor="White">
                             <Grid ColumnDefinitions="Auto,*">
-                                <Label Text="🎁" VerticalOptions="Center" Margin="0,0,8,0"/>
+                                <Label Text="🎁"
+                                        VerticalOptions="Center"
+                                        Margin="0,0,8,0"/>
                                 <!-- Binding ke PoinDitukarText (string) bukan PoinDitukar (int) -->
                                 <Entry Grid.Column="1"
                                        Placeholder="Masukkan jumlah poin (0 = tidak pakai)"

@@ -130,30 +130,13 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <Label Text="Jumlah Hasil Produksi"/>
+                    <Label Text="Jumlah Hasil Produksi (per satuan dijual)"/>
                     <Frame CornerRadius="15"
                            Padding="0"
                            BorderColor="#D6B3D9">
                         <Entry Keyboard="Numeric"
                                Text="{Binding JumlahProduksi}"/>
-                    </Frame>
-
-                    <Label Text="Satuan Produksi"/>
-                    <Grid ColumnDefinitions="*,*"
-                          BackgroundColor="#E3C6E8"
-                          Padding="5">
-                        <Button Text="Pcs"
-                                Command="{Binding PilihSatuanProduksiCommand}"
-                                CommandParameter="Pcs"
-                                BackgroundColor="{Binding SatuanProduksiDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Pcs}"
-                                CornerRadius="15"/>
-                        <Button Text="Loyang"
-                                Grid.Column="1"
-                                Command="{Binding PilihSatuanProduksiCommand}"
-                                CommandParameter="Loyang"
-                                BackgroundColor="{Binding SatuanProduksiDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Loyang}"
-                                CornerRadius="15"/>
-                    </Grid>
+                    </Frame>                    
 
                     <Button Text="Simpan Hasil Ke Stok"
                             Command="{Binding SimpanProduksiCommand}"

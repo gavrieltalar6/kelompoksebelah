@@ -298,9 +298,25 @@ public class PosViewModel : INotifyPropertyChanged
 
     private void TambahKeKeranjang(StokProduk produk)
     {
+        // Cek stok tersedia
+        if (produk.JumlahStok <= 0)
+        {
+            Application.Current.MainPage.DisplayAlert("Stok Habis", $"{produk.NamaBarang} sedang habis!", "OK");
+            return;
+        }
+
         var existing = Keranjang.FirstOrDefault(k => k.Produk.IDBarang == produk.IDBarang);
+
         if (existing != null)
+        {
+            if (existing.Jumlah >= produk.JumlahStok)
+            {
+                Application.Current.MainPage.DisplayAlert("Stok Tidak Cukup",
+                    $"Stok {produk.NamaBarang} hanya {produk.JumlahStok} pcs!", "OK");
+                return;
+            }
             existing.Jumlah++;
+        }
         else
             Keranjang.Add(new KeranjangItem { Produk = produk });
 
