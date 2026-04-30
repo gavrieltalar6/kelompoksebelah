@@ -13,5 +13,8 @@ transaksi di pemberitahuan dan alert gabener
 stok kue yang telah diproduksi
 removed: loyang di satuan produksi
 
+tombol kategori di POS dihilangkan.
+Kabarin kalo searchbarnya berguna
+
 next:
 functional navbar
