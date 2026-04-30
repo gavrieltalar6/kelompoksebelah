@@ -9,4 +9,10 @@ public partial class PosPage : ContentPage
         InitializeComponent();
         BindingContext = new PosViewModel();
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is PosViewModel vm)
+            vm.RefreshProduk();
+    }
 }

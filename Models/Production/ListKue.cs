@@ -1,11 +1,13 @@
 namespace CakeProject.Models.Production;
 using CakeProject.Models.Inventory;
+
 public class ListKue
 {
-    public string NamaKue {get; set;}
-    public string Deskripsi {get; set;}
-    public StokProduk DataStok {get; set;}
-    internal ResepKue DetailResep { get; set; }
+    public string NamaKue { get; set; }
+    public string Deskripsi { get; set; }
+    public StokProduk DataStok { get; set; }
+    public ResepKue DetailResep { get; set; } // ← sudah public
+
     public string GetInfoLengkap()
     {
         string id = DataStok != null ? DataStok.IDBarang.ToString() : "??";
@@ -22,7 +24,7 @@ public class ListKue
             infoWaste = "Data resep tidak ada";
         }
 
-        return 
+        return
             $"[{id}] {NamaKue.ToUpper()}\n" +
             $"Harga: Rp {DataStok?.HargaJual ?? 0}\n" +
             $"Status: {status}\n" +

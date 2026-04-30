@@ -10,7 +10,10 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
             <converters:SatuanColorConverter x:Key="SatuanColorConverter"/>
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

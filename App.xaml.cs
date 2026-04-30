@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
+﻿using CakeProject.Views;
 namespace CakeProject;
 
 public partial class App : Application
@@ -9,11 +8,13 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        Task.Run(async () => await TokoData.MuatSemuaAsync());
+
+        // Muat data synchronous sebelum app jalan
+        Task.Run(async () => await TokoData.MuatSemuaAsync()).Wait();
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        return new Window(new AppShell());
+        return new Window(new AppShell()); // ← langsung AppShell, tidak perlu LoadingPage
     }
 }

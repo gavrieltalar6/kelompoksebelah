@@ -1,13 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CakeProject.Views.AdminPage"
              xmlns:local="clr-namespace:CakeProject"
+             x:Class="CakeProject.Views.AdminPage"
              BackgroundColor="#F1CBF1">
 
-    <!-- RESOURCES -->
     <ContentPage.Resources>
         <Style TargetType="Border"
-                x:Key="CardStyle">
+               x:Key="CardStyle">
             <Setter Property="BackgroundColor"
                     Value="White"/>
             <Setter Property="Padding"
@@ -20,290 +20,182 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style TargetType="Label">
             <Setter Property="TextColor"
                     Value="Black"/>
         </Style>
     </ContentPage.Resources>
 
-    <!-- ROOT GRID -->
     <Grid RowDefinitions="*,70">
 
-        <!-- ===================== -->
-        <!-- SCROLL CONTENT -->
-        <!-- ===================== -->
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="15,20,15,10"
-                    Spacing="15">
+                                 Spacing="15">
 
-                <!-- TITLE -->
                 <Label Text="Bake Flow"
                        FontSize="30"
                        FontAttributes="Bold"/>
 
                 <!-- METRICS -->
                 <Grid ColumnDefinitions="*,*,*"
-                        ColumnSpacing="10">
-
+                      ColumnSpacing="10">
                     <Border Grid.Column="0"
                             Padding="10">
                         <VerticalStackLayout>
-                            <Label Text="Stok 6"
-                                    FontAttributes="Bold"/>
-                            <Label Text="85 Pcs"
-                                    FontAttributes="Bold"/>
+                            <Label Text="Stok Kritis"
+                                   FontAttributes="Bold"
+                                   FontSize="11"/>
+                            <Label Text="{Binding JumlahStokKritis, StringFormat='{0} Bahan'}"
+                                   FontAttributes="Bold"
+                                   FontSize="18"/>
                         </VerticalStackLayout>
                     </Border>
-
                     <Border Grid.Column="1"
                             Padding="10">
-                        <Label Text="Output Produksi"
-                               FontAttributes="Bold"
-                               VerticalOptions="Center"/>
+                        <VerticalStackLayout>
+                            <Label Text="Total Produk"
+                                   FontAttributes="Bold"
+                                   FontSize="11"/>
+                            <Label Text="{Binding JumlahProduk, StringFormat='{0} Jenis'}"
+                                   FontAttributes="Bold"
+                                   FontSize="18"/>
+                        </VerticalStackLayout>
                     </Border>
-
                     <Border Grid.Column="2"
                             Padding="10">
-                        <Label Text="Pesanan Terbanyak"
-                               FontAttributes="Bold"
-                               VerticalOptions="Center"/>
+                        <VerticalStackLayout>
+                            <Label Text="Terlaris"
+                                   FontAttributes="Bold"
+                                   FontSize="11"/>
+                            <Label Text="{Binding ProdukTerlaris}"
+                                   FontAttributes="Bold"
+                                   FontSize="13"/>
+                        </VerticalStackLayout>
                     </Border>
-
                 </Grid>
 
                 <!-- ALERT -->
                 <Border Style="{StaticResource CardStyle}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Pemberitahuan &amp; Alert"
-                                FontAttributes="Bold"/>
-                        <Label Text="Tepung Terigu : Kritis (25 Karung)"
-                               FontAttributes="Bold"/>
-                        <Label Text="Aktivitas Baru : Transaksi Ricky #111070 (Tiramisu x1)"
-                               FontAttributes="Bold"/>
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+                        <VerticalStackLayout x:Name="AlertContainer"
+                                             Spacing="5"/>
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- SALES REPORT -->
+                <!-- LAPORAN PENJUALAN -->
                 <Border Style="{StaticResource CardStyle}">
                     <VerticalStackLayout Spacing="10">
-
-                        <!-- HEADER -->
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Text="Laporan Penjualan (Terkini)"
-                                   FontAttributes="Bold"/>
-
-                            <Border Grid.Column="1"
-                                    BackgroundColor="#EBD5EB"
-                                    Padding="10,5">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="5"/>
-                                </Border.StrokeShape>
-                                <Label Text="Lihat Semua"
-                                       FontSize="11"
-                                       FontAttributes="Bold"/>
-                            </Border>
-                        </Grid>
-
+                        <Label Text="Laporan Penjualan (Terkini)"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
                         <BoxView HeightRequest="1"
-                                Color="Black"/>
-
-                        <!-- LIST -->
-                        <VerticalStackLayout Spacing="5">
-
-                            <!-- ITEM -->
-                            <Grid ColumnDefinitions="2*,*,*">
-                                <Label Text="25 Mar, 17:50:00 AM"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                                <Label Text="James"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Rp 150.000"
-                                       FontSize="12"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="End"/>
-                            </Grid>
-
-                            <Grid ColumnDefinitions="2*,*,*">
-                                <Label Text="25 Mar, 17:50:00 AM"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Ricky"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Rp 150.000"
-                                       FontSize="12"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="End"/>
-                            </Grid>
-
-                            <Grid ColumnDefinitions="2*,*,*">
-                                <Label Text="25 Mar, 17:50:00 AM"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Agus"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Rp 150.000"
-                                       FontSize="12"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="End"/>
-                            </Grid>
-
-                        </VerticalStackLayout>
-
+                                 Color="Black"/>
+                        <VerticalStackLayout x:Name="LaporanContainer"
+                                             Spacing="2"/>
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- PRODUCT CATALOG -->
+                <!-- KEUNTUNGAN -->
+                <Grid ColumnDefinitions="*,*"
+                        ColumnSpacing="10">
+                    <Border Grid.Column="0"
+                            Style="{StaticResource CardStyle}">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Keuntungan Hari Ini"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Text="{Binding KeuntunganHariIni}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#46f311"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1"
+                            Style="{StaticResource CardStyle}">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Keuntungan Minggu Ini"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Text="{Binding KeuntunganMingguIni}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#46f311"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- KATALOG PRODUK + EDIT HARGA -->
                 <Border Style="{StaticResource CardStyle}">
                     <VerticalStackLayout Spacing="15">
-
-                        <!-- HEADER -->
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Text="Katalog Produk"
-                                   FontSize="20"
-                                   FontAttributes="Bold"/>
-                            <Label Text="▲"
-                                   TextColor="#DABEE0"
-                                   FontSize="18"/>
-                        </Grid>
-
-                        <Label Text="Product"
-                               FontSize="12"
-                               FontAttributes="Bold"/>
-
+                        <Label Text="Katalog Produk"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
                         <BoxView HeightRequest="1"
-                                Color="Black"/>
-
-                        <!-- PRODUCT 1 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-
-                            <Image Source="tiramisu.png"
-                                   WidthRequest="60"
-                                   HeightRequest="60"
-                                   Aspect="AspectFill"/>
-
-                            <VerticalStackLayout Grid.Column="1">
-                                <Label Text="Kue Tiramisu"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Rp 20k"/>
-                            </VerticalStackLayout>
-
-                            <Label Grid.Column="2"
-                                   Text="Rp 550.000"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                        </Grid>
-
-                        <!-- PRODUCT 2 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-
-                            <Image Source="balok.png"
-                                   WidthRequest="60"
-                                   HeightRequest="60"
-                                   Aspect="AspectFill"/>
-
-                            <VerticalStackLayout Grid.Column="1">
-                                <Label Text="Kue Balok Cokelat"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Rp 50k"/>
-                            </VerticalStackLayout>
-
-                            <Label Grid.Column="2"
-                                   Text="Rp 550.000"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                        </Grid>
-
-                        <!-- PRODUCT 3 -->
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-
-                            <Image Source="roblox.png"
-                                   WidthRequest="60"
-                                   HeightRequest="60"
-                                   Aspect="AspectFill"/>
-
-                            <VerticalStackLayout Grid.Column="1">
-                                <Label Text="Kue Roblox"
-                                       FontAttributes="Bold"/>
-                                <Label Text="Rp 170k"/>
-                            </VerticalStackLayout>
-
-                            <Label Grid.Column="2"
-                                   Text="Rp 550.000"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                        </Grid>
-
+                                 Color="Black"/>
+                        <VerticalStackLayout x:Name="ProdukContainer"
+                                             Spacing="2"/>
                     </VerticalStackLayout>
                 </Border>
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- ===================== -->
-        <!-- BOTTOM NAV -->
-        <!-- ===================== -->
+        <!-- BOTTOM NAV (belum fungsional) -->
         <Border Grid.Row="1"
                 BackgroundColor="White"
                 Margin="5"
                 Padding="5">
-
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="20"/>
             </Border.StrokeShape>
-
             <Grid ColumnDefinitions="*,*,*,*,*,*">
-
                 <VerticalStackLayout HorizontalOptions="Center">
                     <Image Source="home.png"
-                            HeightRequest="24"/>
+                           HeightRequest="24"/>
                     <Label Text="Home"
-                            FontSize="10"/>
+                           FontSize="10"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="1"
-                        HorizontalOptions="Center">
+                                     HorizontalOptions="Center">
                     <Image Source="warehouse.png"
-                            HeightRequest="24"/>
+                           HeightRequest="24"/>
                     <Label Text="Warehouse"
-                            FontSize="10"/>
+                           FontSize="10"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="2"
-                        HorizontalOptions="Center">
+                                     HorizontalOptions="Center">
                     <Image Source="cashier.png"
-                            HeightRequest="24"/>
+                           HeightRequest="24"/>
                     <Label Text="Cashier"
-                            FontSize="10"/>
+                           FontSize="10"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="3"
-                        HorizontalOptions="Center">
+                                     HorizontalOptions="Center">
                     <Image Source="kitchen.png"
-                            HeightRequest="24"/>
+                           HeightRequest="24"/>
                     <Label Text="Kitchen"
-                            FontSize="10"/>
+                           FontSize="10"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="4"
-                        HorizontalOptions="Center">
+                                     HorizontalOptions="Center">
                     <Image Source="menu.png"
-                            HeightRequest="24"/>
+                           HeightRequest="24"/>
                     <Label Text="Menu"
-                            FontSize="10"/>
+                           FontSize="10"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="5"
-                        HorizontalOptions="Center">
+                                     HorizontalOptions="Center">
                     <Image Source="settings.png"
-                            HeightRequest="24"/>
+                           HeightRequest="24"/>
                     <Label Text="Setting"
-                            FontSize="10"/>
+                           FontSize="10"/>
                 </VerticalStackLayout>
-
             </Grid>
         </Border>
 

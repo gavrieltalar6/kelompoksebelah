@@ -1,0 +1,17 @@
+lokasi path-path json
+C:\Users\LENOVO\AppData\Local\User Name\com.companyname.cakeproject\Data
+
+
+udah ada guide buat stok, pastiin kalo angka, ga negatif, ga lewat batas
+
+list updates:
+halaman tambah kue, input resep
+mekanisme auto reduce bahan berdasarkan resep
+bug fixed: laporan penjualan terkini
+hitung keuntungan, tampilkan di admin 2 kolom "hari ini" dan "bulan ini"
+transaksi di pemberitahuan dan alert gabener
+
+next:
+
+functional navbar
+stok kue yang telah diproduksi

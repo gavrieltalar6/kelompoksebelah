@@ -1,9 +1,11 @@
 namespace CakeProject.Models.Production;
 
-internal class ResepKue
+public class ResepKue
 {
-    private Dictionary<string, double> DaftarBahanBaku { get; set; }
-    private double LamaMasak { get; set; }
+    public Dictionary<string, double> DaftarBahanBaku { get; set; } = new();
+    public double LamaMasak { get; set; }
+
+    public ResepKue() { } // constructor kosong untuk JSON deserialize
 
     public ResepKue(Dictionary<string, double> bahan, double lama)
     {
@@ -11,7 +13,7 @@ internal class ResepKue
         LamaMasak = lama;
     }
 
-    internal double KalkulasiWaste()
+    public double KalkulasiWaste()
     {
         double totalBeratGram = 0;
 
@@ -23,13 +25,9 @@ internal class ResepKue
                 double jumlah = item.Value;
 
                 if (namaBahan.Contains("telur"))
-                {
                     totalBeratGram += (jumlah * 50);
-                }
                 else
-                {
                     totalBeratGram += jumlah;
-                }
             }
         }
 

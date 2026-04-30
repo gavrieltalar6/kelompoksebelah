@@ -9,4 +9,10 @@ public partial class DapurPage : ContentPage
         InitializeComponent();
         BindingContext = new DapurViewModel();
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is DapurViewModel vm)
+            vm.RefreshData();
+    }
 }

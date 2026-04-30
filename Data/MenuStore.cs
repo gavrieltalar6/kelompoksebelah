@@ -73,10 +73,75 @@ public class MenuStore
     };
 
     private List<ListKue> BuatDataAwalMenu() => new()
+{
+    new ListKue
     {
-        new ListKue { NamaKue = "Bolu Macan", Deskripsi = "Kue bolu klasik" },
-        new ListKue { NamaKue = "Fudgy Brownies", Deskripsi = "Brownies cokelat lembut" },
-    };
+        NamaKue = "Kue Tiramisu",
+        Deskripsi = "Kue tiramisu klasik",
+        DetailResep = new ResepKue(
+            new Dictionary<string, double>
+            {
+                { "Tepung Terigu", 0.2 },
+                { "Telur", 3 },
+                { "Gula", 0.1 },
+                { "Susu", 0.2 }
+            }, 60)
+    },
+    new ListKue
+    {
+        NamaKue = "Kue Balok Cokelat",
+        Deskripsi = "Kue balok cokelat lembut",
+        DetailResep = new ResepKue(
+            new Dictionary<string, double>
+            {
+                { "Tepung Terigu", 0.3 },
+                { "Telur", 4 },
+                { "Gula", 0.15 },
+                { "Mentega", 0.1 }
+            }, 75)
+    },
+    new ListKue
+    {
+        NamaKue = "Kue Ultah Vanila",
+        Deskripsi = "Kue ulang tahun rasa vanila",
+        DetailResep = new ResepKue(
+            new Dictionary<string, double>
+            {
+                { "Tepung Terigu", 0.5 },
+                { "Telur", 6 },
+                { "Gula", 0.3 },
+                { "Mentega", 0.2 },
+                { "Susu", 0.3 }
+            }, 90)
+    },
+    new ListKue
+    {
+        NamaKue = "Fudgy Brownies",
+        Deskripsi = "Brownies cokelat lembut",
+        DetailResep = new ResepKue(
+            new Dictionary<string, double>
+            {
+                { "Tepung Terigu", 0.2 },
+                { "Telur", 2 },
+                { "Gula", 0.15 },
+                { "Mentega", 0.2 }
+            }, 45)
+    },
+    new ListKue
+    {
+        NamaKue = "Kue Roblox",
+        Deskripsi = "Kue tema Roblox",
+        DetailResep = new ResepKue(
+            new Dictionary<string, double>
+            {
+                { "Tepung Terigu", 0.4 },
+                { "Telur", 5 },
+                { "Gula", 0.25 },
+                { "Mentega", 0.15 },
+                { "Susu", 0.2 }
+            }, 120)
+    },
+};
 }
 
 // === HELPER CLASSES untuk JSON ===

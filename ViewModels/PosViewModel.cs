@@ -453,6 +453,13 @@ public class PosViewModel : INotifyPropertyChanged
         _poinDitukarText = "0";
         OnPropertyChanged(nameof(PoinDitukarText));
         RefreshTotal();
+
+    }
+    public void RefreshProduk()
+    {
+        DaftarProduk.Clear();
+        foreach (var p in _store.DaftarProduk)
+            DaftarProduk.Add(p);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
