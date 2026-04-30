@@ -6,122 +6,141 @@
              BackgroundColor="#F1CBF1"
              Title="Setting Resep">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20"
-                Spacing="20">
+    <Grid RowDefinitions="*,70">
 
-            <!-- HEADER -->
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Text="Setting Resep Kue"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       VerticalOptions="Center"/>
-                <Button Grid.Column="1"
-                        Text="+"
-                        FontSize="24"
-                        BackgroundColor="#D6B3D9"
-                        TextColor="Black"
-                        CornerRadius="20"
-                        WidthRequest="50"
-                        HeightRequest="50"
-                        Command="{Binding TambahKueBaruCommand}"/>
-            </Grid>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="20">
 
-            <!-- PILIH KUE -->
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 20"
-                    Padding="15">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Pilih Kue"
-                            FontAttributes="Bold"
-                            FontSize="16"
-                            TextColor="Black"/>
-                    <CollectionView ItemsSource="{Binding DaftarKue}"
-                            HeightRequest="80">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal"
-                                    ItemSpacing="10"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <VerticalStackLayout Spacing="4">
-                                    <Button Text="{Binding NamaKue}"
-                                            FontSize="12"
-                                            CornerRadius="15"
-                                            TextColor="Black"
-                                            BackgroundColor="#D6B3D9"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PilihKueCommand}"
-                                            CommandParameter="{Binding .}"/>
-                                    <Button Text="🗑 Hapus"
-                                            FontSize="10"
-                                            CornerRadius="10"
-                                            BackgroundColor="#F26C6C"
-                                            TextColor="White"
-                                            HeightRequest="28"
-                                            Padding="0"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HapusKueCommand}"
-                                            CommandParameter="{Binding .}"/>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- DETAIL RESEP (muncul kalau ada kue terpilih) -->
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 20"
-                    Padding="15"
-                    IsVisible="{Binding AdaKueTerpilih}">
-                <VerticalStackLayout Spacing="15">
-
-                    <Label Text="{Binding KueTerpilih.NamaKue, StringFormat='Resep: {0}'}"
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="Setting Resep Kue"
+                           FontSize="24"
                            FontAttributes="Bold"
-                           FontSize="18"
-                           TextColor="Black"/>
-
-                    <!-- LAMA MASAK -->
-                    <Label Text="Lama Masak (menit)"
-                            FontAttributes="Bold"
-                            TextColor="Black"/>
-                    <Border StrokeShape="RoundRectangle 15"
-                            Padding="5">
-                        <Entry Keyboard="Numeric"
-                               Text="{Binding LamaMasakText}"
-                               Placeholder="menit"/>
-                    </Border>
-
-                    <!-- DAFTAR BAHAN -->
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="Daftar Bahan"
-                               FontAttributes="Bold"
-                               FontSize="16"
-                               TextColor="Black"
-                               VerticalOptions="Center"/>
-                        <Button Grid.Column="1"
-                                Text="+ Tambah Bahan"
-                                FontSize="11"
-                                BackgroundColor="#D6B3D9"
-                                TextColor="Black"
-                                CornerRadius="10"
-                                Command="{Binding TambahBahanCommand}"/>
-                    </Grid>
-
-                    <!-- LIST BAHAN -->
-                    <VerticalStackLayout x:Name="BahanContainer"
-                            Spacing="8"/>
-
-                    <!-- SIMPAN -->
-                    <Button Text="Simpan Resep"
+                           VerticalOptions="Center"/>
+                    <Button Grid.Column="1"
+                            Text="+"
+                            FontSize="24"
                             BackgroundColor="#D6B3D9"
                             TextColor="Black"
-                            FontAttributes="Bold"
                             CornerRadius="20"
-                            Command="{Binding SimpanResepCommand}"/>
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            Command="{Binding TambahKueBaruCommand}"/>
+                </Grid>
 
+                <!-- PILIH KUE -->
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" Padding="15">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Pilih Kue" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+                        <CollectionView ItemsSource="{Binding DaftarKue}" HeightRequest="80">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout Spacing="4">
+                                        <Button Text="{Binding NamaKue}"
+                                                FontSize="12"
+                                                CornerRadius="15"
+                                                TextColor="Black"
+                                                BackgroundColor="#D6B3D9"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PilihKueCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        <Button Text="🗑 Hapus"
+                                                FontSize="10"
+                                                CornerRadius="10"
+                                                BackgroundColor="#F26C6C"
+                                                TextColor="White"
+                                                HeightRequest="28"
+                                                Padding="0"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HapusKueCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- DETAIL RESEP -->
+                <Border BackgroundColor="White"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="15"
+                        IsVisible="{Binding AdaKueTerpilih}">
+                    <VerticalStackLayout Spacing="15">
+
+                        <Label Text="{Binding KueTerpilih.NamaKue, StringFormat='Resep: {0}'}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               TextColor="Black"/>
+
+                        <Label Text="Lama Masak (menit)" FontAttributes="Bold" TextColor="Black"/>
+                        <Border StrokeShape="RoundRectangle 15" Padding="5">
+                            <Entry Keyboard="Numeric" Text="{Binding LamaMasakText}" Placeholder="menit"/>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Daftar Bahan"
+                                   FontAttributes="Bold"
+                                   FontSize="16"
+                                   TextColor="Black"
+                                   VerticalOptions="Center"/>
+                            <Button Grid.Column="1"
+                                    Text="+ Tambah Bahan"
+                                    FontSize="11"
+                                    BackgroundColor="#D6B3D9"
+                                    TextColor="Black"
+                                    CornerRadius="10"
+                                    Command="{Binding TambahBahanCommand}"/>
+                        </Grid>
+
+                        <VerticalStackLayout x:Name="BahanContainer" Spacing="8"/>
+
+                        <Button Text="Simpan Resep"
+                                BackgroundColor="#D6B3D9"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                CornerRadius="20"
+                                Command="{Binding SimpanResepCommand}"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTTOM NAV -->
+        <Border Grid.Row="1" BackgroundColor="White" Margin="5" Padding="5">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*,*,*">
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image Source="home.png" HeightRequest="24"/>
+                    <Label Text="Admin" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-            </Border>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Image Source="warehouse.png" HeightRequest="24"/>
+                    <Label Text="Gudang" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Image Source="cashier.png" HeightRequest="24"/>
+                    <Label Text="Kasir" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center">
+                    <Image Source="kitchen.png" HeightRequest="24"/>
+                    <Label Text="Dapur" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center">
+                    <Image Source="menu.png" HeightRequest="24"/>
+                    <Label Text="Resep" FontSize="10" HorizontalOptions="Center" TextColor="#A855A8" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center">
+                    <Image Source="settings.png" HeightRequest="24"/>
+                    <Label Text="Member" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
 
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>

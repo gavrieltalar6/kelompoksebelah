@@ -146,7 +146,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- BOTTOM NAV (belum fungsional) -->
+        <!-- BOTTOM NAV -->
         <Border Grid.Row="1"
                 BackgroundColor="White"
                 Margin="5"
@@ -156,45 +156,28 @@
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*,*,*">
                 <VerticalStackLayout HorizontalOptions="Center">
-                    <Image Source="home.png"
-                           HeightRequest="24"/>
-                    <Label Text="Home"
-                           FontSize="10"/>
+                    <Image Source="home.png" HeightRequest="24"/>
+                    <Label Text="Admin" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="1"
-                                     HorizontalOptions="Center">
-                    <Image Source="warehouse.png"
-                           HeightRequest="24"/>
-                    <Label Text="Warehouse"
-                           FontSize="10"/>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Image Source="warehouse.png" HeightRequest="24"/>
+                    <Label Text="Gudang" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="2"
-                                     HorizontalOptions="Center">
-                    <Image Source="cashier.png"
-                           HeightRequest="24"/>
-                    <Label Text="Cashier"
-                           FontSize="10"/>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Image Source="cashier.png" HeightRequest="24"/>
+                    <Label Text="Kasir" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="3"
-                                     HorizontalOptions="Center">
-                    <Image Source="kitchen.png"
-                           HeightRequest="24"/>
-                    <Label Text="Kitchen"
-                           FontSize="10"/>
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center">
+                    <Image Source="kitchen.png" HeightRequest="24"/>
+                    <Label Text="Dapur" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="4"
-                                     HorizontalOptions="Center">
-                    <Image Source="menu.png"
-                           HeightRequest="24"/>
-                    <Label Text="Menu"
-                           FontSize="10"/>
+                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center">
+                    <Image Source="menu.png" HeightRequest="24"/>
+                    <Label Text="Resep" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="5"
-                                     HorizontalOptions="Center">
-                    <Image Source="settings.png"
-                           HeightRequest="24"/>
-                    <Label Text="Setting"
-                           FontSize="10"/>
+                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center">
+                    <Image Source="settings.png" HeightRequest="24"/>
+                    <Label Text="Member" FontSize="10" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </Grid>
         </Border>

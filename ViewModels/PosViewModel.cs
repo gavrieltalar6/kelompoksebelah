@@ -296,32 +296,32 @@ public class PosViewModel : INotifyPropertyChanged
             DaftarProduk.Add(p);
     }
 
-    private async void TambahKeKeranjang(StokProduk produk)
-{
-    if (produk.JumlahStok <= 0)
+    private void TambahKeKeranjang(StokProduk produk)
     {
-        await Application.Current.MainPage.DisplayAlert(
-            "Stok Habis", $"{produk.NamaBarang} sedang tidak tersedia.", "OK");
-        return;
-    }
-
-    var existing = Keranjang.FirstOrDefault(k => k.Produk.IDBarang == produk.IDBarang);
-    if (existing != null)
-    {
-        // Cek kalau jumlah di keranjang sudah melebihi stok
-        if (existing.Jumlah >= produk.JumlahStok)
+        // Cek stok tersedia
+        if (produk.JumlahStok <= 0)
         {
-            await Application.Current.MainPage.DisplayAlert(
-                "Stok Tidak Cukup", $"Stok {produk.NamaBarang} hanya {produk.JumlahStok} {produk.Satuan}.", "OK");
+            Application.Current.MainPage.DisplayAlert("Stok Habis", $"{produk.NamaBarang} sedang habis!", "OK");
             return;
         }
-        existing.Jumlah++;
-    }
-    else
-        Keranjang.Add(new KeranjangItem { Produk = produk });
 
-    RefreshTotal();
-}
+        var existing = Keranjang.FirstOrDefault(k => k.Produk.IDBarang == produk.IDBarang);
+
+        if (existing != null)
+        {
+            if (existing.Jumlah >= produk.JumlahStok)
+            {
+                Application.Current.MainPage.DisplayAlert("Stok Tidak Cukup",
+                    $"Stok {produk.NamaBarang} hanya {produk.JumlahStok} pcs!", "OK");
+                return;
+            }
+            existing.Jumlah++;
+        }
+        else
+            Keranjang.Add(new KeranjangItem { Produk = produk });
+
+        RefreshTotal();
+    }
 
     private void RefreshTotal()
     {

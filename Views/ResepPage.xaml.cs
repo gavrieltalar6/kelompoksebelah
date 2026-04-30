@@ -16,11 +16,7 @@ public partial class ResepPage : ContentPage
         if (BindingContext is ResepViewModel vm)
         {
             RenderBahan(vm);
-
-            // Subscribe agar RenderBahan dipanggil otomatis saat DaftarBahan berubah
             vm.DaftarBahan.CollectionChanged += (s, e) => RenderBahan(vm);
-
-            // Subscribe saat KueTerpilih berubah
             vm.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(vm.KueTerpilih))
@@ -32,8 +28,6 @@ public partial class ResepPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-
-        // Unsubscribe saat halaman ditinggal agar tidak memory leak
         if (BindingContext is ResepViewModel vm)
         {
             vm.DaftarBahan.CollectionChanged -= (s, e) => RenderBahan(vm);
@@ -57,7 +51,6 @@ public partial class ResepPage : ContentPage
                 Padding = new Thickness(0, 4)
             };
 
-            // Nama bahan
             grid.Children.Add(new Label
             {
                 Text = bahan.NamaBahan,
@@ -66,7 +59,6 @@ public partial class ResepPage : ContentPage
                 VerticalOptions = LayoutOptions.Center
             });
 
-            // Entry jumlah
             var entry = new Entry
             {
                 Text = bahan.Jumlah.ToString(),
@@ -81,7 +73,6 @@ public partial class ResepPage : ContentPage
             grid.Children.Add(entry);
             Grid.SetColumn(entry, 1);
 
-            // Satuan
             var satuan = new Label
             {
                 Text = bahan.Satuan,
@@ -92,7 +83,6 @@ public partial class ResepPage : ContentPage
             grid.Children.Add(satuan);
             Grid.SetColumn(satuan, 2);
 
-            // Tombol hapus
             var hapusBtn = new Button
             {
                 Text = "🗑",
@@ -116,4 +106,22 @@ public partial class ResepPage : ContentPage
             BahanContainer.Children.Add(grid);
         }
     }
+
+    private async void OnAdminClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//AdminPage");
+
+    private async void OnGudangClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//GudangPage");
+
+    private async void OnKasirClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//PosPage");
+
+    private async void OnDapurClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//DapurPage");
+
+    private async void OnResepClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//ResepPage");
+
+    private async void OnMemberClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//CustomerPage");
 }

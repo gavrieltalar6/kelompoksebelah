@@ -24,6 +24,26 @@ public partial class AdminPage : ContentPage
         }
     }
 
+    // ── NAVBAR NAVIGATION ──────────────────────────────────────────────────
+    private async void OnAdminClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//AdminPage");
+
+    private async void OnGudangClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//GudangPage");
+
+    private async void OnKasirClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//PosPage");
+
+    private async void OnDapurClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//DapurPage");
+
+    private async void OnResepClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//ResepPage");
+
+    private async void OnMemberClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//CustomerPage");
+    // ───────────────────────────────────────────────────────────────────────
+
     private void RenderAlert(AdminViewModel vm)
     {
         AlertContainer.Children.Clear();
@@ -32,10 +52,10 @@ public partial class AdminPage : ContentPage
             var grid = new Grid
             {
                 ColumnDefinitions =
-            {
-                new ColumnDefinition(GridLength.Auto),
-                new ColumnDefinition(GridLength.Star)
-            }
+                {
+                    new ColumnDefinition(GridLength.Auto),
+                    new ColumnDefinition(GridLength.Star)
+                }
             };
 
             var icon = new Label { Text = alert.Icon, FontSize = 16 };
@@ -50,16 +70,16 @@ public partial class AdminPage : ContentPage
             grid.Children.Add(icon);
             grid.Children.Add(pesan);
             Grid.SetColumn(icon, 0);
-            Grid.SetColumn(pesan, 1);  // ← ini yang kurang
+            Grid.SetColumn(pesan, 1);
 
             AlertContainer.Children.Add(grid);
         }
     }
+
     private void RenderLaporan(AdminViewModel vm)
     {
         LaporanContainer.Children.Clear();
 
-        // Ambil 5 terbaru, diurutkan descending (terbaru dulu)
         var data = App.TokoData.DaftarPenjualan
             .OrderByDescending(p => p.Tanggal)
             .Take(5)

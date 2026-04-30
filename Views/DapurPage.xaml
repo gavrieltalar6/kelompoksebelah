@@ -13,157 +13,142 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20"
-                             Spacing="20">
+    <Grid RowDefinitions="*,70">
 
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <Label Text="←"
-                       FontSize="20"
-                       VerticalOptions="Center"/>
-                <Label Grid.Column="1"
-                       Text="Manajemen Dapur"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"/>
-                <Label Grid.Column="2"
-                       Text="?"
-                       FontSize="20"
-                       VerticalOptions="Center"/>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Text="←" FontSize="20" VerticalOptions="Center"/>
+                    <Label Grid.Column="1"
+                           Text="Manajemen Dapur"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Label Grid.Column="2" Text="?" FontSize="20" VerticalOptions="Center"/>
+                </Grid>
+
+                <Frame BackgroundColor="#F2F2F2" CornerRadius="25" Padding="20">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Ambil Bahan dari Gudang" FontAttributes="Bold" FontSize="18"/>
+                        <Label Text="Pilih Bahan Baku"/>
+                        <Frame CornerRadius="15" Padding="0" BorderColor="#D6B3D9">
+                            <Picker Title="Pilih bahan..."
+                                    ItemsSource="{Binding ListBahanGudang}"
+                                    ItemDisplayBinding="{Binding NamaBarang}"
+                                    SelectedItem="{Binding BahanTerpilih}"/>
+                        </Frame>
+                        <Label Text="Jumlah Bahan Diambil"/>
+                        <Frame CornerRadius="15" Padding="0" BorderColor="#D6B3D9">
+                            <Entry Keyboard="Numeric"
+                                   Text="{Binding JumlahAmbil}"
+                                   Placeholder="Contoh: 5"/>
+                        </Frame>
+                        <Button Text="Proses Pengambilan"
+                                Command="{Binding AmbilBahanCommand}"
+                                BackgroundColor="#D6B3D9"
+                                TextColor="Black"
+                                CornerRadius="20"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="#F2F2F2" CornerRadius="25" Padding="20">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Status Stok Baku Saat Ini" FontAttributes="Bold" FontSize="18"/>
+                        <CollectionView ItemsSource="{Binding ListBahanGudang}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame CornerRadius="20" BackgroundColor="#8FE388" Margin="0,5" Padding="5">
+                                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="10">
+                                            <Label Text="✔" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding NamaBarang}"
+                                                   Margin="10,0"
+                                                   VerticalOptions="Center"
+                                                   FontAttributes="Bold"/>
+                                            <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center">
+                                                <Label Text="{Binding JumlahStok}"/>
+                                                <Label Text="{Binding Satuan}" Margin="5,0,0,0"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="#F2F2F2" CornerRadius="25" Padding="20">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Catat Hasil Produksi" FontAttributes="Bold" FontSize="18"/>
+                        <Label Text="Pilih Produk Hasil"/>
+
+                        <CollectionView ItemsSource="{Binding ListKueTersedia}" HeightRequest="55">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Text="{Binding NamaBarang}"
+                                            FontSize="12"
+                                            CornerRadius="15"
+                                            TextColor="Black"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PilihKueCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="{Binding IsAktif, Converter={StaticResource BoolToColorConverter}}"/>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Label Text="Jumlah Hasil Produksi (per satuan dijual)"/>
+                        <Frame CornerRadius="15" Padding="0" BorderColor="#D6B3D9">
+                            <Entry Keyboard="Numeric" Text="{Binding JumlahProduksi}"/>
+                        </Frame>
+
+                        <Button Text="Simpan Hasil Ke Stok"
+                                Command="{Binding SimpanProduksiCommand}"
+                                BackgroundColor="#D6B3D9"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                CornerRadius="20"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTTOM NAV -->
+        <Border Grid.Row="1" BackgroundColor="White" Margin="5" Padding="5">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*,*,*">
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Image Source="home.png" HeightRequest="24"/>
+                    <Label Text="Admin" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Image Source="warehouse.png" HeightRequest="24"/>
+                    <Label Text="Gudang" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Image Source="cashier.png" HeightRequest="24"/>
+                    <Label Text="Kasir" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center">
+                    <Image Source="kitchen.png" HeightRequest="24"/>
+                    <Label Text="Dapur" FontSize="10" HorizontalOptions="Center" TextColor="#A855A8" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center">
+                    <Image Source="menu.png" HeightRequest="24"/>
+                    <Label Text="Resep" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center">
+                    <Image Source="settings.png" HeightRequest="24"/>
+                    <Label Text="Member" FontSize="10" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
             </Grid>
+        </Border>
 
-            <Frame BackgroundColor="#F2F2F2"
-                   CornerRadius="25"
-                   Padding="20">
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="Ambil Bahan dari Gudang"
-                           FontAttributes="Bold"
-                           FontSize="18"/>
-                    <Label Text="Pilih Bahan Baku"/>
-                    <Frame CornerRadius="15"
-                           Padding="0"
-                           BorderColor="#D6B3D9">
-                        <Picker Title="Pilih bahan..."
-                                ItemsSource="{Binding ListBahanGudang}"
-                                ItemDisplayBinding="{Binding NamaBarang}"
-                                SelectedItem="{Binding BahanTerpilih}"/>
-                    </Frame>
-                    <Label Text="Jumlah Bahan Diambil"/>
-                    <Frame CornerRadius="15"
-                           Padding="0"
-                           BorderColor="#D6B3D9">
-                        <Entry Keyboard="Numeric"
-                               Text="{Binding JumlahAmbil}"
-                               Placeholder="Contoh: 5"/>
-                    </Frame>
-                    <Button Text="Proses Pengambilan"
-                            Command="{Binding AmbilBahanCommand}"
-                            BackgroundColor="#D6B3D9"
-                            TextColor="Black"
-                            CornerRadius="20"/>
-                </VerticalStackLayout>
-            </Frame>
-
-            <Frame BackgroundColor="#F2F2F2"
-                   CornerRadius="25"
-                   Padding="20">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Status Stok Baku Saat Ini"
-                           FontAttributes="Bold"
-                           FontSize="18"/>
-                    <CollectionView ItemsSource="{Binding ListBahanGudang}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame CornerRadius="20"
-                                       BackgroundColor="#8FE388"
-                                       Margin="0,5"
-                                       Padding="5">
-                                    <Grid ColumnDefinitions="Auto,*,Auto"
-                                          Padding="10">
-                                        <Label Text="✔"
-                                               VerticalOptions="Center"/>
-                                        <Label Grid.Column="1"
-                                               Text="{Binding NamaBarang}"
-                                               Margin="10,0"
-                                               VerticalOptions="Center"
-                                               FontAttributes="Bold"/>
-                                        <StackLayout Grid.Column="2"
-                                                     Orientation="Horizontal"
-                                                     VerticalOptions="Center">
-                                            <Label Text="{Binding JumlahStok}"/>
-                                            <Label Text="{Binding Satuan}"
-                                                   Margin="5,0,0,0"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Frame>
-
-            <Frame BackgroundColor="#F2F2F2"
-                   CornerRadius="25"
-                   Padding="20">
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="Catat Hasil Produksi"
-                           FontAttributes="Bold"
-                           FontSize="18"/>
-                    <Label Text="Pilih Produk Hasil"/>
-
-                    <CollectionView ItemsSource="{Binding ListKueTersedia}"
-                                    HeightRequest="55">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal"
-                                               ItemSpacing="10"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Button Text="{Binding NamaBarang}"
-                                        FontSize="12"
-                                        CornerRadius="15"
-                                        TextColor="Black"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PilihKueCommand}"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="{Binding IsAktif, Converter={StaticResource BoolToColorConverter}}"/>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <Label Text="Jumlah Hasil Produksi"/>
-                    <Frame CornerRadius="15"
-                           Padding="0"
-                           BorderColor="#D6B3D9">
-                        <Entry Keyboard="Numeric"
-                               Text="{Binding JumlahProduksi}"/>
-                    </Frame>
-
-                    <Label Text="Satuan Produksi"/>
-                    <Grid ColumnDefinitions="*,*"
-                          BackgroundColor="#E3C6E8"
-                          Padding="5">
-                        <Button Text="Pcs"
-                                Command="{Binding PilihSatuanProduksiCommand}"
-                                CommandParameter="Pcs"
-                                BackgroundColor="{Binding SatuanProduksiDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Pcs}"
-                                CornerRadius="15"/>
-                        <Button Text="Loyang"
-                                Grid.Column="1"
-                                Command="{Binding PilihSatuanProduksiCommand}"
-                                CommandParameter="Loyang"
-                                BackgroundColor="{Binding SatuanProduksiDipilih, Converter={StaticResource SatuanColorConverter}, ConverterParameter=Loyang}"
-                                CornerRadius="15"/>
-                    </Grid>
-
-                    <Button Text="Simpan Hasil Ke Stok"
-                            Command="{Binding SimpanProduksiCommand}"
-                            BackgroundColor="#D6B3D9"
-                            TextColor="Black"
-                            FontAttributes="Bold"
-                            CornerRadius="20"/>
-                </VerticalStackLayout>
-            </Frame>
-
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>
