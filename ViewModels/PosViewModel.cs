@@ -296,16 +296,32 @@ public class PosViewModel : INotifyPropertyChanged
             DaftarProduk.Add(p);
     }
 
-    private void TambahKeKeranjang(StokProduk produk)
+    private async void TambahKeKeranjang(StokProduk produk)
+{
+    if (produk.JumlahStok <= 0)
     {
-        var existing = Keranjang.FirstOrDefault(k => k.Produk.IDBarang == produk.IDBarang);
-        if (existing != null)
-            existing.Jumlah++;
-        else
-            Keranjang.Add(new KeranjangItem { Produk = produk });
-
-        RefreshTotal();
+        await Application.Current.MainPage.DisplayAlert(
+            "Stok Habis", $"{produk.NamaBarang} sedang tidak tersedia.", "OK");
+        return;
     }
+
+    var existing = Keranjang.FirstOrDefault(k => k.Produk.IDBarang == produk.IDBarang);
+    if (existing != null)
+    {
+        // Cek kalau jumlah di keranjang sudah melebihi stok
+        if (existing.Jumlah >= produk.JumlahStok)
+        {
+            await Application.Current.MainPage.DisplayAlert(
+                "Stok Tidak Cukup", $"Stok {produk.NamaBarang} hanya {produk.JumlahStok} {produk.Satuan}.", "OK");
+            return;
+        }
+        existing.Jumlah++;
+    }
+    else
+        Keranjang.Add(new KeranjangItem { Produk = produk });
+
+    RefreshTotal();
+}
 
     private void RefreshTotal()
     {

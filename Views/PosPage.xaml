@@ -74,6 +74,10 @@
                                     <Label Text="{Binding HargaJual, StringFormat='Rp {0:N0}'}"
                                            FontSize="12"
                                            HorizontalOptions="Center"/>
+                                    <Label Text="{Binding JumlahStok, StringFormat='Stok: {0:0}'}"
+                                            FontSize="10"
+                                            HorizontalOptions="Center"
+                                            TextColor="#888"/>
                                     <Button Text="+ Tambah"
                                             FontSize="10"
                                             BackgroundColor="#D6B3D9"
