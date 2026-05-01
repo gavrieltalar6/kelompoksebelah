@@ -24,7 +24,6 @@ public partial class AdminPage : ContentPage
         }
     }
 
-    // ── NAVBAR NAVIGATION ──────────────────────────────────────────────────
     private async void OnAdminClicked(object sender, EventArgs e)
         => await Shell.Current.GoToAsync("//AdminPage");
 

@@ -134,30 +134,73 @@
                 <RoundRectangle CornerRadius="20"/>
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*,*,*">
-                <VerticalStackLayout HorizontalOptions="Center">
-                    <Image Source="home.png" HeightRequest="24"/>
-                    <Label Text="Admin" FontSize="10" HorizontalOptions="Center"/>
+
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAdminClicked"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent" Padding="8,5" HorizontalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="🏠" FontSize="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Label Text="Admin" FontSize="10" TextColor="#888888" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
-                    <Image Source="warehouse.png" HeightRequest="24"/>
-                    <Label Text="Gudang" FontSize="10" HorizontalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnGudangClicked"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent" Padding="8,5" HorizontalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="🏭" FontSize="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Label Text="Gudang" FontSize="10" TextColor="#888888" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
-                    <Image Source="cashier.png" HeightRequest="24"/>
-                    <Label Text="Kasir" FontSize="10" HorizontalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDapurClicked"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent" Padding="8,5" HorizontalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="🍳" FontSize="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Label Text="Dapur" FontSize="10" TextColor="#888888" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center">
-                    <Image Source="kitchen.png" HeightRequest="24"/>
-                    <Label Text="Dapur" FontSize="10" HorizontalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnResepClicked"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent" Padding="8,5" HorizontalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="📖" FontSize="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Label Text="Resep" FontSize="10" TextColor="#888888" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center">
-                    <Image Source="menu.png" HeightRequest="24"/>
-                    <Label Text="Resep" FontSize="10" HorizontalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnKasirClicked"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent" Padding="8,5" HorizontalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="🧾" FontSize="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Label Text="POS" FontSize="10" TextColor="#888888" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center">
-                    <Image Source="settings.png" HeightRequest="24"/>
-                    <Label Text="Member" FontSize="10" HorizontalOptions="Center" TextColor="#A855A8" FontAttributes="Bold"/>
+
+                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMemberClicked"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="#EBD5EB" Padding="8,5" HorizontalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="👥" FontSize="20" HorizontalOptions="Center"/>
+                    </Border>
+                    <Label Text="Member" FontSize="10" FontAttributes="Bold" TextColor="#7B3F7B" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
+
             </Grid>
         </Border>
 
