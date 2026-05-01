@@ -10,13 +10,6 @@ public partial class ResepPage : ContentPage
         BindingContext = new ResepViewModel();
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        if (BindingContext is ResepViewModel vm)
-            vm.RefreshData();
-    }
-
     private async void OnAdminClicked(object sender, TappedEventArgs e)
         => await Shell.Current.GoToAsync("//AdminPage");
 

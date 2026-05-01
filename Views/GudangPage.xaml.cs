@@ -10,13 +10,6 @@ public partial class GudangPage : ContentPage
         BindingContext = new GudangViewModel();
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        if (BindingContext is GudangViewModel vm)
-            vm.RefreshData();
-    }
-
     private async void OnAdminClicked(object sender, EventArgs e)
         => await Shell.Current.GoToAsync("//AdminPage");
 

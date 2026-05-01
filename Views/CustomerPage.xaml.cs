@@ -10,13 +10,6 @@ public partial class CustomerPage : ContentPage
         BindingContext = new CustomerViewModel();
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        if (BindingContext is CustomerViewModel vm)
-            vm.RefreshData();
-    }
-
     private async void OnAdminClicked(object sender, EventArgs e)
         => await Shell.Current.GoToAsync("//AdminPage");
 
